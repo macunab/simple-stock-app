@@ -27,7 +27,7 @@ export class AuthService {
   // authenticate to the server
   login(email: string, password: string) {
 
-    const url: string = `${ this.baseUrl }/auth/login`;
+    const url: string = `${ this.baseUrl }/auth/`;
     const body = { email, password };
 
     return this.http.post<ServerResponse>( url, body )
@@ -45,7 +45,7 @@ export class AuthService {
   // check if auth token is valid
   tokenValidation(): Observable<boolean> {
 
-    const url: string = `${ this.baseUrl }/auth/validate`;
+    const url: string = `${ this.baseUrl }/auth/renew`;
     const headers = new HttpHeaders()
       .set('x-token', localStorage.getItem('token') || '');
 

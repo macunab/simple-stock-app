@@ -11,4 +11,5 @@ export interface ServerResponse {
     msg?: string;
     token?: string;
     permissions?: string;
+    // add office? update the backend res
 }

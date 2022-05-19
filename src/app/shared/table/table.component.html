@@ -1,0 +1,23 @@
+<p-table [columns]="headers" [value]="dataTable" responsiveLayout="scroll">
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns">
+                {{col}}
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-data let-columns="columns">
+        <tr>
+            <td *ngFor="let col of columns">
+                {{data[col]}}
+            </td>
+            <td *ngIf="buttons.length">
+                <button pButton label="{{ but.title }}"
+                    *ngFor="let but of buttons"
+                    (click)="sendMessage( data, but.functionType )"
+                    class="{{but.class}}">
+                </button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
