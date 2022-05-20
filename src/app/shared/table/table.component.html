@@ -1,21 +1,22 @@
-<p-table [columns]="headers" [value]="dataTable" responsiveLayout="scroll">
+<p-table [columns]="headers" [value]="row" responsiveLayout="scroll">
     <ng-template pTemplate="header" let-columns>
         <tr>
             <th *ngFor="let col of columns">
-                {{col}}
+                {{ col.title | titlecase }}
             </th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-data let-columns="columns">
         <tr>
             <td *ngFor="let col of columns">
-                {{data[col]}}
+                {{data.values[col.name]}}
             </td>
             <td *ngIf="buttons.length">
                 <button pButton label="{{ but.title }}"
                     *ngFor="let but of buttons"
-                    (click)="sendMessage( data, but.functionType )"
-                    class="{{but.class}}">
+                    icon="{{ but.icon }}"
+                    (click)="sendData( data.values, but.functionType )"
+                    class="{{ but.class }}">
                 </button>
             </td>
         </tr>

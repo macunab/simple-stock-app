@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TableHeader, ButtonSettings } from '../interfaces/interfaces';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ButtonSettings, Row, Column, GenericTableEvent } from '../interfaces/interfaces';
 
 @Component({
   selector: 'app-table',
@@ -7,18 +7,16 @@ import { TableHeader, ButtonSettings } from '../interfaces/interfaces';
   styles: [
   ]
 })
-export class TableComponent {
+export class TableComponent<T> {
 
-  // Implements generics pending
-
-  @Input() dataTable!: any[];
-  @Input() headers!: TableHeader[];
+  @Input() rows!: Row<T>[];
+  @Input() headers!: Column<T>[];
   @Input() buttons!: ButtonSettings[];
-  @Output() parentMethod = new EventEmitter<any>();
+  @Output() parentMethod = new EventEmitter<GenericTableEvent<T>>();
 
   constructor() { }
 
-  sendMessage(data: any, type: string) {
+  sendData(data: T, type: string) {
     this.parentMethod.emit({data, type});
   }
 

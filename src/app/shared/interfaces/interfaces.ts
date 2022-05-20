@@ -1,17 +1,21 @@
 
-export interface TableHeader {
-    field: string;
-    name: string;
+export interface Column<T> {
+    name: keyof T;
+    title: string;
+}
+
+export interface Row<T> {
+    values: T;
+}
+
+export interface GenericTableEvent<T> {
+    data: T;
+    type: string;
 }
 
 export interface ButtonSettings {
-    title: string;
+    title?: string;
     class: string;
     functionType: string; 
     icon?: string;
-}
-
-export interface TableEvent {
-    data: any;
-    type: string;
 }
