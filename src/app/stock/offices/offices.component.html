@@ -1,1 +1,4 @@
-<p>offices works!</p>
+<h3>Sucursales:</h3>
+</hr>
+<app-table [headers]="officeColumns" [rows]="offices" [buttons]="buttons"
+ (parentMethod)="getTableEvent($event)"></app-table>
