@@ -13,22 +13,25 @@ export class OfficesComponent implements OnInit {
 
   offices!: Row<Office>[];
   officeColumns: Column<Office>[] = [
-    { name: 'name', title: 'Nombre' },
-    { name: 'email', title: 'Email' },
-    { name: 'address', title: 'Direccion' }
+    { field: 'name', title: 'Nombre' },
+    { field: 'email', title: 'Email' },
+    { field: 'address', title: 'Direccion' }
   ];
   buttons: ButtonSettings[] = [
     {
       class: 'p-button-rounded p-button-text p-button-warning mr-2',
       functionType: 'edit',
-      icon: 'pi pi-pencil'
+      icon: 'pi pi-pencil',
+      tooltipText: 'Editar'
     },
     {
       class: 'p-button-rounded p-button-text p-button-danger mr-2',
       functionType: 'delete',
-      icon: 'pi pi-trash'
+      icon: 'pi pi-trash',
+      tooltipText: 'Eliminar'
     }
   ];
+  officesSearchFilters: string[] = ['values.name', 'values.email', 'values.name'];
 
   constructor(private officeService: OfficesService) { }
 
@@ -50,8 +53,8 @@ export class OfficesComponent implements OnInit {
     }
   }
 
-  openAdd() {
-
+  openAdd($event: boolean) {
+    console.log(`El modal de agregar nuevo usuario se abre? : ${$event}`);
   }
 
   openDelete(id: string) {

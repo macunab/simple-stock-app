@@ -1,4 +1,20 @@
-<p-table [columns]="headers" [value]="row" responsiveLayout="scroll">
+<p-toolbar>
+    <div class="p-toolbar-group-left">
+        <button pButton icon="pi pi-plus" (click)="addEvent(true)" class="p-button-sm p-button-success"
+            label="Nuevo"></button>
+    </div>
+    
+    <div class="p-toolbar-group-right">
+        <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input #inputSearch type="text" pInputText placeholder="Search..."
+                (input)="table.filterGlobal( inputSearch.value, 'contains')" />
+        </span>
+   
+    </div>
+</p-toolbar>
+
+<p-table #table [columns]="headers" [value]="row" responsiveLayout="scroll">
     <ng-template pTemplate="header" let-columns>
         <tr>
             <th *ngFor="let col of columns">
@@ -16,7 +32,7 @@
                     *ngFor="let but of buttons"
                     icon="{{ but.icon }}"
                     (click)="sendData( data.values, but.functionType )"
-                    class="{{ but.class }}">
+                    class="{{ but.class }}" pTooltip="{{ but.tooltipText }}" tooltipPosition="top">
                 </button>
             </td>
         </tr>

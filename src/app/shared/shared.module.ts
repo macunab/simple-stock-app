@@ -4,6 +4,9 @@ import { CommonModule } from '@angular/common';
 // Primeng components
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
+import { ToolbarModule } from 'primeng/toolbar';
+import { InputTextModule } from 'primeng/inputtext';
+import { TooltipModule } from 'primeng/tooltip';
 
 // My components
 import { TableComponent } from './table/table.component';
@@ -19,7 +22,10 @@ import { SidebarComponent } from './sidebar/sidebar.component';
   imports: [
     CommonModule,
     TableModule,
-    ButtonModule
+    ButtonModule,
+    ToolbarModule,
+    InputTextModule,
+    TooltipModule
   ]
 })
 export class SharedModule { }

@@ -1,6 +1,6 @@
 
 export interface Column<T> {
-    name: keyof T;
+    field: keyof T;
     title: string;
 }
 
@@ -18,4 +18,5 @@ export interface ButtonSettings {
     class: string;
     functionType: string; 
     icon?: string;
+    tooltipText?: string;
 }

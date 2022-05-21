@@ -1,4 +1,4 @@
 <h3>Sucursales:</h3>
 </hr>
-<app-table [headers]="officeColumns" [rows]="offices" [buttons]="buttons"
- (parentMethod)="getTableEvent($event)"></app-table>
+<app-table [headers]="officeColumns" [rows]="offices" [buttons]="buttons" [filters]="officesSearchFilters"
+ (parentMethod)="getTableEvent($event)" (addEventMethod)="addOpen($event)"></app-table>
