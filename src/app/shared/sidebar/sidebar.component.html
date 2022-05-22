@@ -1,1 +1,10 @@
-<p>sidebar works!</p>
+
+<div class="navbar">
+    <button pButton class="p-button-sm" icon="pi pi-bars" (click)="showSidebar()"></button>
+    <p-splitButton styleClass="p-button-outlined p-button-sm" 
+        label="Marshall" icon="pi pi-user" [model]="userItems"></p-splitButton>
+</div>
+
+<p-sidebar [(visible)]="display" [title]="title">
+    <p-menu [model]="sidebarItems" [style]="{'width':'100%'}"></p-menu>
+</p-sidebar>

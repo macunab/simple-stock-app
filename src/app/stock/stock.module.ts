@@ -5,17 +5,21 @@ import { StockRoutingModule } from './stock-routing.module';
 import { OfficesComponent } from './offices/offices.component';
 import { ProductsComponent } from './products/products.component';
 import { MovementsComponent } from './movements/movements.component';
+import { MainComponent } from './main/main.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
   declarations: [
     OfficesComponent,
     ProductsComponent,
-    MovementsComponent
+    MovementsComponent,
+    MainComponent
   ],
   imports: [
     CommonModule,
-    StockRoutingModule
+    StockRoutingModule,
+    SharedModule
   ]
 })
 export class StockModule { }

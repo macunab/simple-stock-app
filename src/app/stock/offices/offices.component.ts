@@ -53,8 +53,8 @@ export class OfficesComponent implements OnInit {
     }
   }
 
-  openAdd($event: boolean) {
-    console.log(`El modal de agregar nuevo usuario se abre? : ${$event}`);
+  addOpen($event: boolean) {
+    console.log(`El modal de agregar nuevo usuario se abre?${$event}`);
   }
 
   openDelete(id: string) {

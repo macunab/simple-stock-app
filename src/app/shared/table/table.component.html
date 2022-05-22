@@ -14,7 +14,7 @@
     </div>
 </p-toolbar>
 
-<p-table #table [columns]="headers" [value]="row" responsiveLayout="scroll">
+<p-table #table [columns]="headers" [value]="rows" responsiveLayout="scroll">
     <ng-template pTemplate="header" let-columns>
         <tr>
             <th *ngFor="let col of columns">
