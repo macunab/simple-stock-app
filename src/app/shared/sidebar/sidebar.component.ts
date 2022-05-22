@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 
 @Component({
@@ -14,7 +15,7 @@ export class SidebarComponent implements OnInit {
   display: boolean = false;
   title: string = 'StockApp';
 
-  constructor() { }
+  constructor( private router: Router) { }
 
   ngOnInit(): void {
     this.sidebarItems = [
@@ -23,7 +24,8 @@ export class SidebarComponent implements OnInit {
         icon: 'pi pi-building',
         styleClass: 'p-2',
         command: () => {
-          console.log('navigateByUrl...');
+          this.router.navigateByUrl('offices');
+          this.display = false;
         }
       },
       {
@@ -34,7 +36,8 @@ export class SidebarComponent implements OnInit {
         icon: 'pi pi-qrcode',
         styleClass: 'p-2',
         command: () => {
-          console.log('navigateByUrl...');
+          this.router.navigateByUrl('products');
+          this.display = false;
         }
       },
       {
@@ -45,7 +48,8 @@ export class SidebarComponent implements OnInit {
         icon: 'pi pi-book',
         styleClass: 'p-2',
         command: () => {
-          console.log('navigateByUrl...');
+          this.router.navigateByUrl('movements');
+          this.display = false;
         }
       },
       {
@@ -56,7 +60,8 @@ export class SidebarComponent implements OnInit {
         icon: 'pi pi-chart-bar',
         styleClass: 'p-2',
         command: () => {
-          console.log('navigateByUrl...');
+          this.router.navigateByUrl('');
+          this.display = false;
         }
       }
     ];
