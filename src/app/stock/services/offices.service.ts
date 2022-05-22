@@ -21,7 +21,8 @@ export class OfficesService {
     return this.http.get<ArrayResp<Office>>( url )
       .pipe(
         map( res => {
-          this.transform.transformData(res.values);
+          const data = this.transform.transformData(res.values);
+          return data;
         }),
         catchError( resp => of(resp.ok))
       );

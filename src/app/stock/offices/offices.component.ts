@@ -39,6 +39,7 @@ export class OfficesComponent implements OnInit {
     this.officeService.findAllOffice()
       .subscribe(resp => {
         this.offices = resp;
+        console.log(this.offices);
       });
   }
 

@@ -14,18 +14,22 @@
     </div>
 </p-toolbar>
 
-<p-table #table [columns]="headers" [value]="rows" responsiveLayout="scroll">
+<p-table #table [columns]="headers" [value]="rows" responsiveLayout="stack" 
+    [globalFilterFields]="filters" [rows]="3" [paginator]="true">
     <ng-template pTemplate="header" let-columns>
         <tr>
             <th *ngFor="let col of columns">
                 {{ col.title | titlecase }}
+            </th>
+            <th *ngIf="buttons.length">
+                Acciones
             </th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-data let-columns="columns">
         <tr>
             <td *ngFor="let col of columns">
-                {{data.values[col.name]}}
+                {{data.values[col.field]}}
             </td>
             <td *ngIf="buttons.length">
                 <button pButton label="{{ but.title }}"
