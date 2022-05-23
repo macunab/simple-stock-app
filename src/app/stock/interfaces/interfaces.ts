@@ -1,5 +1,6 @@
 
 export interface Office {
+    _id?: string;
     name: string;
     email: string;
     address: string;

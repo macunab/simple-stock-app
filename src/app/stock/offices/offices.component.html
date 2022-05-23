@@ -2,3 +2,53 @@
 
 <app-table [headers]="officeColumns" [rows]="offices" [buttons]="buttons" [filters]="officesSearchFilters"
  (parentMethod)="getTableEvent($event)" (addMethod)="addOpen($event)"></app-table>
+
+ <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
+ <p-dialog header="Formulario sucursal" [modal]="true" [style]="{width: '550px'}"
+    [(visible)]="dialogDisplay" [draggable]="false" [resizable]="false" [dismissableMask]="true">
+    <form autocomplete="off"
+        [formGroup]="officeForm"
+        (ngSubmit)="saveOffice()"> 
+        <div class="p-fluid grid">
+            <div class="field col-12 md:col-12">
+                <label for="name">Nombre</label>
+                <input pInputText class="p-inputtext-sm"
+                [ngClass]="fieldValid('name') ? 'p-inputtext-sm ng-dirty ng-invalid' : 'p-inputtext-sm'"
+                formControlName="name"
+                aria-describedby="name-help"
+                type="text"
+                id="name" required autofocus>
+                <small id="name-help" class="p-error block" *ngIf="fieldValid('name')">
+                    El nombre debe tener por lo menos 3 caracteres
+                </small>    
+            </div>
+            <div class="field col-12 md:col-12">
+                <label for="email">Email</label>
+                <input pInputText class="p-inputtext-sm"
+                [ngClass]="fieldValid('email') ? 'p-inputtext-sm ng-dirty ng-invalid' : 'p-inputtext-sm'"
+                formControlName="email"
+                aria-describedby="email-help"
+                type="text"
+                id="email" required autofocus>
+                <small id="email-help" class="p-error block" *ngIf="fieldValid('email')">
+                    Debe ser un email valido
+                </small>    
+            </div>
+            <div class="field col-12 md:col-12">
+                <label for="address">Direccion</label>
+                <input pInputText class="p-inputtext-sm"
+                [ngClass]="fieldValid('address') ? 'p-inputtext-sm ng-dirty ng-invalid' : 'p-inputtext-sm'"
+                formControlName="address"
+                aria-describedby="address-help"
+                type="text"
+                id="address" required autofocus>
+                <small id="address-help" class="p-error block" *ngIf="fieldValid('address')">
+                    La direccion es obligatoria
+                </small>    
+            </div>
+        </div>
+        <button icon="pi pi-check" pButton type="submit" 
+            class="p-button-text" label="Guardar"></button>
+    </form>
+</p-dialog>
