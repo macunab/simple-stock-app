@@ -1,4 +1,4 @@
-import { HttpClient, HttpContext } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, of } from 'rxjs';
 import { ServerResponse } from 'src/app/auth/interfaces/interfaces';
@@ -18,7 +18,9 @@ export class OfficesService {
 
   findAllOffice() {
     const url: string = `${ this.baseUrl }/offices`;
-    return this.http.get<ArrayResp<Office>>( url )
+    const headers = new HttpHeaders()
+      .set('x-token', localStorage.getItem('token') || '');
+    return this.http.get<ArrayResp<Office>>( url, { headers } )
       .pipe(
         map( res => {
           const data = this.transform.transformData(res.values);
@@ -30,7 +32,9 @@ export class OfficesService {
 
   deleteOffice(id: string) {
     const url: string = `${ this.baseUrl }/offices/${id}/disabled`;
-    return this.http.put<ServerResponse>( url, {} )
+    const headers = new HttpHeaders()
+      .set('x-token', localStorage.getItem('token') || '');
+    return this.http.put<ServerResponse>( url, {}, { headers } )
       .pipe(
         map( res => res.ok),
         catchError( res => of(res.ok))
@@ -39,9 +43,10 @@ export class OfficesService {
 
   saveOffice(office: Office) {
     const url: string =`${ this.baseUrl }/offices/create`;
-    return this.http.post<ServerResponse>( url, office )
+    const headers = new HttpHeaders()
+      .set('x-token', localStorage.getItem('token') || '');
+    return this.http.post<ServerResponse>( url, office, { headers } )
       .pipe(
-        map( res => res.ok ),
         catchError( res => of(res.ok))
       )
 
@@ -49,8 +54,10 @@ export class OfficesService {
 
   updateOffice(office: Office) {
     const url: string = `${ this.baseUrl }/offices/${ office._id }`;
+    const headers = new HttpHeaders()
+      .set('x-token', localStorage.getItem('token') || '');
     const { name, email, address } = office;
-    return this.http.put<ServerResponse>( url, { name, email, address })
+    return this.http.put<ServerResponse>( url, { name, email, address }, { headers })
       .pipe(
         map( res => res.ok),
         catchError( res => of(res.ok))

@@ -69,15 +69,38 @@ export class OfficesComponent implements OnInit {
       return;
     }
     const officeToSave: Office = this.officeForm.value;
-
     //if update
     if( this.office._id ) {
       officeToSave._id = this.office._id;
-
+      this.officeService.updateOffice(officeToSave)
+        .subscribe( res => {
+          if( res ) {
+            this.msgService.add({ severity: 'success', summary: 'Ok',
+            detail: 'La sucursal se actualizo exitosamente', life: 2000 });
+            const index = this.offices.findIndex( val => val.values._id === officeToSave._id);
+            ( index !== -1 ) ? this.offices[index] = { values: officeToSave } : '';
+          } else {
+            this.msgService.add({ severity: 'error', summary:'Error', 
+            detail: 'Se ha producido un error al intentar actualizar los datos de la sucursal, por favor intentelo de nuevo mas tarde'});
+          }
+        });
       //if add
     } else {
-
+      this.officeService.saveOffice(officeToSave)
+        .subscribe( res => {
+          if( res.ok == true ) {
+            this.msgService.add({ severity: 'success', summary: 'Ok',
+              detail: 'La sucursal se ha creado exitosamente', life: 2000 });
+            officeToSave._id = res.uid;
+            this.offices.push({ values: officeToSave });
+            this.offices = [ ...this.offices ];
+          } else {
+            this.msgService.add({ severity: 'error', summary: 'Error', 
+              detail: 'Se ha producido un error al intentar actualizar los datos de la sucursal, por favor intentelo de nuevo mas tarde'});
+          }
+        });
     }
+    this.dialogDisplay = false;
   }
 
   getTableEvent($event: GenericTableEvent<Office>) {
@@ -92,7 +115,6 @@ export class OfficesComponent implements OnInit {
   }
 
   addOpen($event: boolean) {
-    console.log(`El modal de agregar nuevo usuario se abre?${$event}`);
     this.officeForm.reset();
     this.office._id = '';
     this.dialogDisplay = $event;

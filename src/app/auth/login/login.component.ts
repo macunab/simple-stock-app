@@ -38,7 +38,7 @@ export class LoginComponent {
     this.authService.login( email, password)
       .subscribe( resp => {
         if( resp === true) {
-          this.router.navigateByUrl('');
+          this.router.navigateByUrl('offices');
         } else {
           Swal.fire('Error', resp, 'error');
         }

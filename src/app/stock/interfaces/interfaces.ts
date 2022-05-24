@@ -7,6 +7,14 @@ export interface Office {
     isEnabled: boolean;
 }
 
+export interface Product {
+    name: string;
+    price: number;
+    description: string;
+    stock: number;
+    office: Office;
+}
+
 export interface ArrayResp<T> {
     values: T[];
 }
