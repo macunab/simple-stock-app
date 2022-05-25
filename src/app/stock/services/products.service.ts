@@ -40,15 +40,21 @@ export class ProductsService {
 
   deleteProduct(id: string) {
     const url: string = `${ this.baseUrl }/products/${id}`;
-    return this.http.delete<ServerResponse>( url )
+    return this.http.delete<ServerResponse>( url, { headers: this.headers } )
       .pipe(
         map( res => res.ok ),
         catchError( error => of(error.ok))
       );
-
   }
 
   updateProduct(product: Product) {
+    const url: string = `${ this.baseUrl }/products/${ product._id }`;
+    const { name, description, price, stock, office } = product;
+    return this.http.put<ServerResponse>( url, {name, description, price, stock, office }, { headers: this.headers })
+      .pipe(
+        map( res => res.ok ),
+        catchError( error => of(error.ok))
+      );
 
   }
 }

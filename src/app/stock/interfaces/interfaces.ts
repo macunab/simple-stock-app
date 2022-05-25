@@ -8,6 +8,7 @@ export interface Office {
 }
 
 export interface Product {
+    _id?: string;
     name: string;
     price: number;
     description: string;

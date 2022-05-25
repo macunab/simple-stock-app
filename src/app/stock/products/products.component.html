@@ -1,1 +1,12 @@
-<p>products works!</p>
+<h3>Productos</h3>
+<app-table [headers]="productColumns" [rows]="products" [buttons]="buttons" [filters]="productSearchFilter"
+    (parentMethod)="getTableEvent($event)" (addMethod)="openAdd($event)"></app-table>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
+<p-toast></p-toast>
+
+<p-dialog header="Formulario product" [modal]="true" [style]="{width: '550px'}"
+    [(visible)]="dialogDisplay" [draggable]="false" [resizable]="false" [dismissableMask]="true">
+
+</p-dialog>
