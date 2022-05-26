@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, tap } from 'rxjs';
+import { Office } from 'src/app/stock/interfaces/interfaces';
 import { environment } from 'src/environments/environment';
 import { ServerResponse, User } from '../interfaces/interfaces';
 
@@ -21,7 +22,7 @@ export class AuthService {
   // Save token and load user data
   loadToken(res: ServerResponse) {
     localStorage.setItem('token', res.token!);
-    this._user = { uid: res.uid!, name: res.name!, permissions: res.permissions!}
+    this._user = { uid: res.uid!, name: res.name!, permissions: res.permissions!, office: res.office! }
   }
 
   // authenticate to the server

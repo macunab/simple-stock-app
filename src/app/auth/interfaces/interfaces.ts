@@ -1,7 +1,10 @@
+import { Office } from "src/app/stock/interfaces/interfaces";
+
 export interface User {
     uid: string;
     name: string;
     permissions: string;
+    office?: Office;
 }
 
 export interface ServerResponse {
@@ -11,5 +14,6 @@ export interface ServerResponse {
     msg?: string;
     token?: string;
     permissions?: string;
+    office?: Office;
     // add office? update the backend res
 }
