@@ -1,4 +1,10 @@
-<h3>Productos</h3>
+<div class="p-fluid grid">
+    <h3 class="col-12 md:col-3">Productos</h3>
+    <p-dropdown class="col-12 md:col-6" [options]="offices" [(ngModel)]="selectedOffice" 
+        (onChange)="seleccion($event)" optionLabel="name"></p-dropdown>
+</div>
+ 
+
 <app-table [headers]="productColumns" [rows]="products" [buttons]="buttons" [filters]="productSearchFilter"
     (parentMethod)="getTableEvent($event)" (addMethod)="openAdd($event)"></app-table>
 
@@ -24,7 +30,38 @@
                     El nombre debe tener por lo menos 3 caracteres
                 </small>    
             </div>
-
-        </div>            
+            <div class="field col-12 md:col-12">
+                <label for="description">Descripcion</label>
+                <textarea pInputTextarea class="p-inputtext-sm"
+                formControlName="description"
+                id="description"></textarea>  
+            </div>
+            <div class="field col-12 md:col-6">
+                <label for="price">Precio</label>
+                <p-inputNumber inputId="price" mode="currency" currency="USD" locale="en-US"
+                    [ngClass]="fieldValid('price') ? 'p-inputtext-sm ng-dirty ng-invalid' : 'p-inputtext-sm'"
+                    formControlName="price"
+                    aria-describedby="price-help"
+                    [min]="1">
+                </p-inputNumber>
+                <small id="price-help" class="p-error block" *ngIf="fieldValid('price')">
+                    El precio es obligatorio
+                </small>    
+            </div>
+            <div class="field col-12 md:col-6">
+                <label for="stock">Stock inicial:</label>
+                <p-inputNumber inputId="stock"
+                    [ngClass]="fieldValid('stock') ? 'p-inputtext-sm ng-dirty ng-invalid' : 'p-inputtext-sm'"
+                    formControlName="stock"
+                    aria-describedby="stock-help"
+                    [min]="0">
+                </p-inputNumber>
+                <small id="stock-help" class="p-error block" *ngIf="fieldValid('stock')">
+                    El stock es obligatorio
+                </small>    
+            </div>
+        </div> 
+        <button icon="pi pi-check" pButton type="submit" 
+                class="p-button-text" label="Guardar"></button>           
     </form>
 </p-dialog>

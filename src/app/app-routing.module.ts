@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { TokenValidationGuard } from './guards/token-validation.guard';
 
 const routes: Routes = [
   {
@@ -8,7 +9,9 @@ const routes: Routes = [
   },
   {
     path: '',
-    loadChildren: () => import('./stock/stock.module').then(m => m.StockModule)
+    loadChildren: () => import('./stock/stock.module').then(m => m.StockModule),
+    canActivate: [TokenValidationGuard],
+    canLoad: [TokenValidationGuard]
   },
   {
     path: '**',

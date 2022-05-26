@@ -7,6 +7,11 @@ export interface Office {
     isEnabled: boolean;
 }
 
+export interface OfficesDrop {
+    name: string;
+    code: string;
+}
+
 export interface Product {
     _id?: string;
     name: string;

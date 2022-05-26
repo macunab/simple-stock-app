@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 // Primeng components
 import { TableModule } from 'primeng/table';
@@ -11,6 +12,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuModule } from 'primeng/menu';
 import { SplitButtonModule } from 'primeng/splitbutton';
+import { DropdownModule } from 'primeng/dropdown';
 
 // My components
 import { TableComponent } from './table/table.component';
@@ -33,7 +35,9 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     SidebarModule,
     MenubarModule,
     MenuModule,
-    SplitButtonModule
+    SplitButtonModule,
+    DropdownModule,
+    FormsModule
   ],
   exports: [
     TableComponent,

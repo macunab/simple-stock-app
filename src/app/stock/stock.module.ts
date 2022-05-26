@@ -8,6 +8,9 @@ import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { DropdownModule } from 'primeng/dropdown';
 
 import { ConfirmationService } from 'primeng/api';
 
@@ -39,7 +42,10 @@ import { SharedModule } from '../shared/shared.module';
     ToastModule,
     ButtonModule,
     InputTextModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    InputTextareaModule,
+    InputNumberModule,
+    DropdownModule
   ],
   providers: [
     ConfirmationService

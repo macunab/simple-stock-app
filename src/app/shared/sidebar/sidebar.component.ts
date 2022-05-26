@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { OfficesDrop } from 'src/app/stock/interfaces/interfaces';
 
 @Component({
   selector: 'app-sidebar',
@@ -14,6 +15,12 @@ export class SidebarComponent implements OnInit {
   userItems!: MenuItem[];
   display: boolean = false;
   title: string = 'StockApp';
+  /*selectedOffice: string = '';
+  offices: OfficesDrop[] = [
+    {name: 'Cerro', code: 'CRR'},
+    {name: 'Independencia', code: 'IND'},
+    {name: 'Chacabuco', code: 'CHC'}
+  ]*/
 
   constructor( private router: Router) { }
 
@@ -81,5 +88,10 @@ export class SidebarComponent implements OnInit {
   showSidebar() {
     this.display = true;
   }
+
+ /* seleccion($event: any) {
+    //console.log('EL SELECT ES ' + $event.value.name);
+    console.log(this.selectedOffice);
+  }*/
 
 }

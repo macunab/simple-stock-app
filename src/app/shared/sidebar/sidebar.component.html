@@ -6,6 +6,9 @@
         label="Marshall" icon="pi pi-user" [model]="userItems"></p-splitButton>
 </div>
 
+
 <p-sidebar [(visible)]="display" [title]="title">
+    <!--<p-dropdown styleClass="mb-3" [style]="{ 'width': '100%'}" [options]="offices" [(ngModel)]="selectedOffice" 
+        (onChange)="seleccion($event)" optionLabel="name"></p-dropdown>-->
     <p-menu [model]="sidebarItems" [style]="{'width':'100%'}"></p-menu>
 </p-sidebar>
