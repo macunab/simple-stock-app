@@ -55,8 +55,8 @@ export class ProductsService {
 
   updateProduct(product: Product) {
     const url: string = `${ this.baseUrl }/products/${ product._id }`;
-    const { name, description, price, stock, office } = product;
-    return this.http.put<ServerResponse>( url, {name, description, price, stock, office }, { headers: this.headers })
+    const { name, description, price } = product;
+    return this.http.put<ServerResponse>( url, {name, description, price }, { headers: this.headers })
       .pipe(
         map( res => res.ok ),
         catchError( error => of(error.ok))

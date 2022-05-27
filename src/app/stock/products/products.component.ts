@@ -54,6 +54,7 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
   office: Office | undefined = this.authService.user.office;
   selectedOffice: Office = {} as Office;
   offices!: Office[];
+  inputStock: boolean = false;
 
   constructor(private fb: FormBuilder, private productService: ProductsService,
     private confirmationService: ConfirmationService, private msgService: MessageService,
@@ -63,7 +64,6 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
   ngOnInit(): void {
     this.productService.findAllProducts(this.office!)
       .subscribe( res => {
-        console.log(res);
         this.products = res;
       });
     this.officeService.findAllOfficeWithoutTransformation()
@@ -98,6 +98,7 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
 
   openAdd($event: boolean) {
     this.product._id = '';
+    this.productForm.controls['stock'].enable();
     this.productForm.reset();
     this.dialogDisplay = true;
   }
@@ -127,6 +128,7 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
 
   openEdit(product: Product) {
     this.product = product;
+    this.productForm.controls['stock'].disable();
     this.productForm.setValue({
       name: product.name,
       description: (product.description) ? product.description : '',
@@ -173,6 +175,9 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
   // Cambio de sucursal
   seleccion($event: any) {
     console.log(this.office);
+    this.products = [];
+    this.productService.findAllProducts(this.selectedOffice)
+      .subscribe( res => this.products = res );
   }
 
 }
