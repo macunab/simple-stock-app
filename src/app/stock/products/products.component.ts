@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/auth/service/auth.service';
 import { ButtonSettings, Column, GenericTableEvent, Row } from 'src/app/shared/interfaces/interfaces';
-import { Office, OfficesDrop, Product } from '../interfaces/interfaces';
+import { Office, Product } from '../interfaces/interfaces';
 import { ProductsService } from '../services/products.service';
+import { OfficesService } from '../services/offices.service';
 
 @Component({
   selector: 'app-products',
@@ -13,7 +14,7 @@ import { ProductsService } from '../services/products.service';
   ],
   providers: [MessageService]
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, AfterContentChecked {
 
   products!: Row<Product>[];
   productColumns: Column<Product>[] = [
@@ -51,29 +52,35 @@ export class ProductsComponent implements OnInit {
     stock: ['', [Validators.required, Validators.min(0)]]
   });
   office: Office | undefined = this.authService.user.office;
-  selectedOffice: string = '';
-  offices: OfficesDrop[] = [
-    {name: 'Cerro', code: 'CRR'},
-    {name: 'Independencia', code: 'IND'},
-    {name: 'Chacabuco', code: 'CHC'}
-  ]
+  selectedOffice: Office = {} as Office;
+  offices!: Office[];
 
   constructor(private fb: FormBuilder, private productService: ProductsService,
     private confirmationService: ConfirmationService, private msgService: MessageService,
-    private authService: AuthService) { }
+    private authService: AuthService, private officeService: OfficesService) { }
 
 
   ngOnInit(): void {
-    this.productService.findAllProducts()
+    this.productService.findAllProducts(this.office!)
       .subscribe( res => {
+        console.log(res);
         this.products = res;
       });
+    this.officeService.findAllOfficeWithoutTransformation()
+      .subscribe( res => {
+        this.offices = res;
+      });
   }
+
+  ngAfterContentChecked(): void {
+    this.selectedOffice = this.office!;
+  }
+
 
   getTableEvent($event: GenericTableEvent<Product>) {
     switch($event.type) {
       case 'edit':
-        console.log('edit product');
+        this.openEdit($event.data);
         break;
       case 'delete':
         this.openDelete($event.data);
@@ -93,7 +100,6 @@ export class ProductsComponent implements OnInit {
     this.product._id = '';
     this.productForm.reset();
     this.dialogDisplay = true;
-    console.log(this.office);
   }
 
   // open delete modal and confirm or cancel the operation
@@ -119,13 +125,15 @@ export class ProductsComponent implements OnInit {
 
   }
 
-  openEdit() {
-
-  }
-
-  seleccion($event: any) {
-    //console.log('EL SELECT ES ' + $event.value.name);
-    console.log(this.selectedOffice);
+  openEdit(product: Product) {
+    this.product = product;
+    this.productForm.setValue({
+      name: product.name,
+      description: (product.description) ? product.description : '',
+      price: product.price,
+      stock: product.stock
+    });
+    this.dialogDisplay = true;
   }
 
   saveProduct() {
@@ -140,6 +148,7 @@ export class ProductsComponent implements OnInit {
       return;
     }
     productToSave.office = this.office;
+    console.log({productToSave});
 
     if(this.product._id) {
 
@@ -159,6 +168,11 @@ export class ProductsComponent implements OnInit {
         });
     }
     this.dialogDisplay = false;
+  }
+
+  // Cambio de sucursal
+  seleccion($event: any) {
+    console.log(this.office);
   }
 
 }

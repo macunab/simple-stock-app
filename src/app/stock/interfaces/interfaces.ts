@@ -21,6 +21,17 @@ export interface Product {
     office: Office;
 }
 
+export interface ProductDb {
+    _id?: string;
+    name: string;
+    price: number;
+    description: string;
+    stockOffices: [{
+        office: string;
+        stock: number;
+    }]
+}
+
 export interface ArrayResp<T> {
     values: T[];
 }

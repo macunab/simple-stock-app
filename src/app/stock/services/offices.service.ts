@@ -30,6 +30,18 @@ export class OfficesService {
       );
   }
 
+  findAllOfficeWithoutTransformation() {
+    const url: string = `${ this.baseUrl }/offices`;
+    const headers = new HttpHeaders()
+      .set('x-token', localStorage.getItem('token') || '');
+    return this.http.get<Office[]>( url, {headers})
+      .pipe(
+        map( res => res.values),
+        catchError(error => of(error.ok))
+      );  
+
+  }
+
   deleteOffice(id: string) {
     const url: string = `${ this.baseUrl }/offices/${id}/disabled`;
     const headers = new HttpHeaders()

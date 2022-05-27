@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { OfficesDrop } from 'src/app/stock/interfaces/interfaces';
 
 @Component({
   selector: 'app-sidebar',

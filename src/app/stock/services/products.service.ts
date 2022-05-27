@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { map, catchError, of, pipe } from 'rxjs';
 import { ServerResponse } from 'src/app/auth/interfaces/interfaces';
 import { environment } from 'src/environments/environment';
-import { ArrayResp, Product } from '../interfaces/interfaces';
+import { __values } from 'tslib';
+import { ArrayResp, Office, Product, ProductDb } from '../interfaces/interfaces';
 import { TransformArrayDataService } from './transform-array-data.service';
 
 @Injectable({
@@ -18,12 +19,17 @@ export class ProductsService {
   constructor( private http: HttpClient, 
     private transform: TransformArrayDataService<Product>) { }
 
-  findAllProducts() {
+  findAllProducts(office: Office) {
     const url: string = `${ this.baseUrl }/products`;
-    return this.http.get<ArrayResp<Product>>( url, {headers: this.headers})
+    return this.http.get<ArrayResp<ProductDb>>( url, {headers: this.headers})
       .pipe(
         map( res => {
-          const data = this.transform.transformData(res.values);
+          const products = res.values.map((value) =>{
+           const stock = value.stockOffices.find( el => el.office == office._id)?.stock;
+           const product: Product = { name: value.name, description: value.description, price: value.price, stock: stock!, office: office };
+           return product;
+          });
+          const data = this.transform.transformData(products);
           return data;
         }),
         catchError( error => of(error.ok))
