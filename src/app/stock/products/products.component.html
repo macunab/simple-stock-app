@@ -1,12 +1,12 @@
 <div class="p-fluid grid">
     <h3 class="col-12 md:col-3">Productos</h3>
     <p-dropdown class="col-12 md:col-6" [options]="offices" [(ngModel)]="selectedOffice" 
-        (onChange)="seleccion($event)" optionLabel="name" name="selectedOffice"></p-dropdown>
+        (onChange)="officeSelection($event)" optionLabel="name" name="selectedOffice"></p-dropdown>
 </div>
  
 
 <app-table [headers]="productColumns" [rows]="products" [buttons]="buttons" [filters]="productSearchFilter"
-    (parentMethod)="getTableEvent($event)" (addMethod)="openAdd($event)"></app-table>
+    (parentMethod)="getTableEvent($event)" (addMethod)="openAddDialog($event)"></app-table>
 
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
 
@@ -64,4 +64,10 @@
         <button icon="pi pi-check" pButton type="submit" 
                 class="p-button-text" label="Guardar"></button>           
     </form>
+</p-dialog>
+
+<p-dialog header="Crear movimiento" [modal]="true" [style]="{width: '700px'}" 
+    [draggable]="false" [resizable]="false" [dismissableMask]="false" [(visible)]="dialogMovement">
+
+
 </p-dialog>

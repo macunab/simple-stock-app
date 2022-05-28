@@ -44,6 +44,7 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
   ];
   productSearchFilter: string[] = ['values.name'];
   dialogDisplay: boolean = false;
+  dialogMovement: boolean = false;
   product: Product = {} as Product;
   productForm: FormGroup = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(3)]],
@@ -76,14 +77,13 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
     this.selectedOffice = this.office!;
   }
 
-
   getTableEvent($event: GenericTableEvent<Product>) {
     switch($event.type) {
       case 'edit':
-        this.openEdit($event.data);
+        this.openEditDialog($event.data);
         break;
       case 'delete':
-        this.openDelete($event.data);
+        this.openDeleteDialog($event.data);
         break;
       case 'movement':
         console.log('Se ha creado un movimiento');
@@ -96,7 +96,7 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
       && this.productForm.controls[field].touched;
   }
 
-  openAdd($event: boolean) {
+  openAddDialog($event: boolean) {
     this.product._id = '';
     this.productForm.controls['stock'].enable();
     this.productForm.reset();
@@ -104,7 +104,7 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
   }
 
   // open delete modal and confirm or cancel the operation
-  openDelete(data: Product) {
+  openDeleteDialog(data: Product) {
     this.confirmationService.confirm({
       message: `Esta seguro que desea eliminar el producto: ${ data.name }`,
       header: 'Eliminar producto',
@@ -126,9 +126,8 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
 
   }
 
-  openEdit(product: Product) {
+  openEditDialog(product: Product) {
     this.product = product;
-    console.log(product);
     this.productForm.controls['stock'].disable();
     this.productForm.setValue({
       name: product.name,
@@ -139,22 +138,23 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
     this.dialogDisplay = true;
   }
 
+  openMovementDialog() {
+
+    this.dialogMovement = true;
+  }
+
   saveProduct() {
     if(this.productForm.invalid) {
       this.productForm.markAllAsTouched();
       return;
     }
     const productToSave: Product = this.productForm.value;
-
     if(this.office === undefined){ 
-      console.log('No se ha seleccionado una sucursal valida' + this.office);
       return;
     }
     productToSave.office = this.office;
-    console.log({productToSave});
 
     if(this.product._id) {
-      console.log('SE EDITA');
       productToSave._id = this.product._id;
       this.productService.updateProduct( productToSave )
         .subscribe( res => {
@@ -188,8 +188,7 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
   }
 
   // Cambio de sucursal
-  seleccion($event: any) {
-    console.log(this.office);
+  officeSelection($event: any) {
     this.products = [];
     this.productService.findAllProducts(this.selectedOffice)
       .subscribe( res => this.products = res );
