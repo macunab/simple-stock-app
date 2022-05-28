@@ -26,7 +26,7 @@ export class ProductsService {
         map( res => {
           const products = res.values.map((value) =>{
            const stock = value.stockOffices.find( el => el.office == office._id)?.stock;
-           const product: Product = { name: value.name, description: value.description, price: value.price, stock: stock!, office: office };
+           const product: Product = { _id: value._id, name: value.name, description: value.description, price: value.price, stock: stock!, office: office };
            return product;
           });
           const data = this.transform.transformData(products);

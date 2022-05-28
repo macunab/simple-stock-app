@@ -128,6 +128,7 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
 
   openEdit(product: Product) {
     this.product = product;
+    console.log(product);
     this.productForm.controls['stock'].disable();
     this.productForm.setValue({
       name: product.name,
@@ -153,7 +154,21 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
     console.log({productToSave});
 
     if(this.product._id) {
-
+      console.log('SE EDITA');
+      productToSave._id = this.product._id;
+      this.productService.updateProduct( productToSave )
+        .subscribe( res => {
+          if(res) {
+            this.msgService.add({ severity: 'success', summary: 'OK', 
+              detail: `El producto ${productToSave.name} se ha editado exitosamente`, life: 2000 });
+            const index = this.products.findIndex( val => val.values._id = productToSave._id );
+            productToSave.stock = this.product.stock;
+            (index !== -1) ? this.products[index] = {values: productToSave} : '';  
+          } else {
+            this.msgService.add({ severity: 'error', summary: 'Error', 
+              detail: 'Se ha producido un error al intentar editar el producto', life: 2000 });
+          }
+        });
     } else {
       this.productService.saveProduct(productToSave)
         .subscribe(res => {
