@@ -11,6 +11,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DropdownModule } from 'primeng/dropdown';
+import { CheckboxModule } from 'primeng/checkbox';
 
 import { ConfirmationService } from 'primeng/api';
 
@@ -45,7 +46,8 @@ import { SharedModule } from '../shared/shared.module';
     ReactiveFormsModule,
     InputTextareaModule,
     InputNumberModule,
-    DropdownModule
+    DropdownModule,
+    CheckboxModule
   ],
   providers: [
     ConfirmationService

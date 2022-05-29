@@ -35,3 +35,19 @@ export interface ProductDb {
 export interface ArrayResp<T> {
     values: T[];
 }
+
+export interface isOut {
+    value: string;
+    key: boolean;
+}
+
+export interface Movement {
+    isOut: boolean;
+    office: Office;
+    user: string;
+    note?: string;
+    isConfirmed?: boolean;
+    products: [
+        { product: string; quantity: number; }
+    ]
+}

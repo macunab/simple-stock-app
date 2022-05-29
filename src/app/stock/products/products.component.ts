@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/auth/service/auth.service';
 import { ButtonSettings, Column, GenericTableEvent, Row } from 'src/app/shared/interfaces/interfaces';
-import { Office, Product } from '../interfaces/interfaces';
+import { isOut, Office, Product } from '../interfaces/interfaces';
 import { ProductsService } from '../services/products.service';
 import { OfficesService } from '../services/offices.service';
 
@@ -43,6 +43,7 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
     }
   ];
   productSearchFilter: string[] = ['values.name'];
+  movementsType: isOut[] = [{ value: 'Entrada', key: false }, { value: 'Salida', key: true }];
   dialogDisplay: boolean = false;
   dialogMovement: boolean = false;
   product: Product = {} as Product;
@@ -54,13 +55,19 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
   });
   office: Office | undefined = this.authService.user.office;
   selectedOffice: Office = {} as Office;
+  changeSelectedOffice: Office = {} as Office;
   offices!: Office[];
-  inputStock: boolean = false;
+  movementForm: FormGroup = this.fb.group({
+    isOut: [true, [Validators.required]],
+    note: [''],
+    isConfirmed: [false],
+    quantity: [1, [Validators.required]]
+  });
+  selectedMovement: isOut = { value: 'Salida', key: true };
 
   constructor(private fb: FormBuilder, private productService: ProductsService,
     private confirmationService: ConfirmationService, private msgService: MessageService,
     private authService: AuthService, private officeService: OfficesService) { }
-
 
   ngOnInit(): void {
     this.productService.findAllProducts(this.office!)
@@ -76,6 +83,13 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
   ngAfterContentChecked(): void {
     this.selectedOffice = this.office!;
   }
+    // Cambio de sucursal
+    officeSelection($event: any) {
+      this.changeSelectedOffice = this.selectedOffice; 
+      this.products = [];
+      this.productService.findAllProducts(this.selectedOffice)
+        .subscribe( res => this.products = res );
+    }
 
   getTableEvent($event: GenericTableEvent<Product>) {
     switch($event.type) {
@@ -87,6 +101,7 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
         break;
       case 'movement':
         console.log('Se ha creado un movimiento');
+        this.openMovementDialog($event.data);
         break;                
     }
   }
@@ -138,9 +153,10 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
     this.dialogDisplay = true;
   }
 
-  openMovementDialog() {
-
+  openMovementDialog(data: Product) {
+    this.product = data;
     this.dialogMovement = true;
+    console.log('OFFICINA SELECCIONADA: ' + this.selectedOffice.name);
   }
 
   saveProduct() {
@@ -161,7 +177,7 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
           if(res) {
             this.msgService.add({ severity: 'success', summary: 'OK', 
               detail: `El producto ${productToSave.name} se ha editado exitosamente`, life: 2000 });
-            const index = this.products.findIndex( val => val.values._id = productToSave._id );
+            const index = this.products.findIndex( val => val.values._id === productToSave._id );
             productToSave.stock = this.product.stock;
             (index !== -1) ? this.products[index] = {values: productToSave} : '';  
           } else {
@@ -187,11 +203,18 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
     this.dialogDisplay = false;
   }
 
-  // Cambio de sucursal
-  officeSelection($event: any) {
-    this.products = [];
-    this.productService.findAllProducts(this.selectedOffice)
-      .subscribe( res => this.products = res );
+  saveMovement() {
+    console.log(this.movementForm.value);
+    console.log('OFFICE: ' + JSON.stringify((this.changeSelectedOffice.name === undefined) ? this.selectedOffice : this.changeSelectedOffice));
+    console.log('USERNAME: ' + this.authService.user.name);
+    console.log('PRODUCT: ' + JSON.stringify(this.product));
+    this.dialogMovement = false;
+
+  }
+
+  // delete this function
+ movementSelect($event: any) {
+    console.log(this.movementForm.value);
   }
 
 }

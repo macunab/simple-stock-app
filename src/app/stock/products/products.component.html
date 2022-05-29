@@ -69,5 +69,44 @@
 <p-dialog header="Crear movimiento" [modal]="true" [style]="{width: '700px'}" 
     [draggable]="false" [resizable]="false" [dismissableMask]="false" [(visible)]="dialogMovement">
 
-
+    <form autocomplete="off"
+        [formGroup]="movementForm"
+        (ngSubmit)="saveMovement()">
+        <div class="p-fluid grid">
+                   
+        <div class="field col-8">
+            <p-dropdown [options]="movementsType" formControlName="isOut"
+                optionLabel="value" optionValue="key" (onChange)="movementSelect($event)" id="isOut"></p-dropdown>   
+        </div>
+        <div class="field col-4">
+            <div class="field-checkbox">
+                <p-checkbox formControlName="isConfirmed" [binary]="true" inputId="binary"></p-checkbox>
+                <label for="binary">Confirmar?</label>
+            </div>
+        </div>
+        <div class="field col-12">
+            <label for="note">Notas</label>
+            <textarea pInputTextarea class="p-inputtext-sm"
+            formControlName="note"
+            id="note"></textarea> 
+        </div>
+        <div class="field col-12 md:col-6">
+            <label for="product">Producto</label>
+            <input pInputText class="p-inputtext-sm"
+            type="text"
+            value="{{ product.name }}"
+            [disabled]="true">
+        </div>
+        <div class="field col-12 md:col-6">
+            <label for="quantity">Cantidad</label>
+            <p-inputNumber inputId="quantity" 
+                formControlName="quantity"
+                aria-describedby="quantity-help"
+                [min]="1">
+            </p-inputNumber>
+        </div>
+    </div>
+    <button icon="pi pi-check" pButton type="submit" 
+                class="p-button-text" label="Guardar"></button>  
+    </form> 
 </p-dialog>
