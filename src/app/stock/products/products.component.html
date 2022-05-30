@@ -4,14 +4,17 @@
         (onChange)="officeSelection($event)" optionLabel="name" name="selectedOffice"></p-dropdown>
 </div>
  
-
+<!-- Product table -->
 <app-table [headers]="productColumns" [rows]="products" [buttons]="buttons" [filters]="productSearchFilter"
     (parentMethod)="getTableEvent($event)" (addMethod)="openAddDialog($event)"></app-table>
 
+<!-- Confirma delete modal -->    
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
 
+<!-- Notification toast -->
 <p-toast></p-toast>
 
+<!-- Create product modal -->
 <p-dialog header="Formulario product" [modal]="true" [style]="{width: '550px'}"
     [(visible)]="dialogDisplay" [draggable]="false" [resizable]="false" [dismissableMask]="true">
     <form autocomplete="off"
@@ -66,47 +69,8 @@
     </form>
 </p-dialog>
 
+<!-- Create Movement/Document Modal -->
 <p-dialog header="Crear movimiento" [modal]="true" [style]="{width: '700px'}" 
     [draggable]="false" [resizable]="false" [dismissableMask]="false" [(visible)]="dialogMovement">
-
-    <form autocomplete="off"
-        [formGroup]="movementForm"
-        (ngSubmit)="saveMovement()">
-        <div class="p-fluid grid">
-                   
-        <div class="field col-8">
-            <p-dropdown [options]="movementsType" formControlName="isOut"
-                optionLabel="value" optionValue="key" (onChange)="movementSelect($event)" id="isOut"></p-dropdown>   
-        </div>
-        <div class="field col-4">
-            <div class="field-checkbox">
-                <p-checkbox formControlName="isConfirmed" [binary]="true" inputId="binary"></p-checkbox>
-                <label for="binary">Confirmar?</label>
-            </div>
-        </div>
-        <div class="field col-12">
-            <label for="note">Notas</label>
-            <textarea pInputTextarea class="p-inputtext-sm"
-            formControlName="note"
-            id="note"></textarea> 
-        </div>
-        <div class="field col-12 md:col-6">
-            <label for="product">Producto</label>
-            <input pInputText class="p-inputtext-sm"
-            type="text"
-            value="{{ product.name }}"
-            [disabled]="true">
-        </div>
-        <div class="field col-12 md:col-6">
-            <label for="quantity">Cantidad</label>
-            <p-inputNumber inputId="quantity" 
-                formControlName="quantity"
-                aria-describedby="quantity-help"
-                [min]="1">
-            </p-inputNumber>
-        </div>
-    </div>
-    <button icon="pi pi-check" pButton type="submit" 
-                class="p-button-text" label="Guardar"></button>  
-    </form> 
+   <app-create-movement [product]="product" [office]="changeSelectedOffice" (formResponse)="closeMovementDialog($any($event))"></app-create-movement>
 </p-dialog>

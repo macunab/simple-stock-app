@@ -42,12 +42,23 @@ export interface isOut {
 }
 
 export interface Movement {
+    _id?: string;
     isOut: boolean;
     office: Office;
     user: string;
     note?: string;
     isConfirmed?: boolean;
     products: [
-        { product: string; quantity: number; }
+        QuantityProduct
     ]
+}
+
+export interface QuantityProduct {
+    product: string;
+    quantity: number;
+}
+
+export interface ResForm<T> {
+    ok: boolean;
+    data: T;
 }

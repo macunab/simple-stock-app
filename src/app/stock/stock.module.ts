@@ -21,6 +21,8 @@ import { ProductsComponent } from './products/products.component';
 import { MovementsComponent } from './movements/movements.component';
 import { MainComponent } from './main/main.component';
 import { SharedModule } from '../shared/shared.module';
+import { CreateMovementComponent } from './products/create-movement.component';
+import { CreateProductComponent } from './products/create-product.component';
 
 
 
@@ -31,7 +33,9 @@ import { SharedModule } from '../shared/shared.module';
     OfficesComponent,
     ProductsComponent,
     MovementsComponent,
-    MainComponent
+    MainComponent,
+    CreateMovementComponent,
+    CreateProductComponent
   ],
   imports: [
     CommonModule,

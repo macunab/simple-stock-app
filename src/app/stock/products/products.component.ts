@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/auth/service/auth.service';
 import { ButtonSettings, Column, GenericTableEvent, Row } from 'src/app/shared/interfaces/interfaces';
-import { isOut, Office, Product } from '../interfaces/interfaces';
+import { isOut, Movement, Office, Product, ResForm } from '../interfaces/interfaces';
 import { ProductsService } from '../services/products.service';
 import { OfficesService } from '../services/offices.service';
 
@@ -43,9 +43,10 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
     }
   ];
   productSearchFilter: string[] = ['values.name'];
-  movementsType: isOut[] = [{ value: 'Entrada', key: false }, { value: 'Salida', key: true }];
+
   dialogDisplay: boolean = false;
   dialogMovement: boolean = false;
+
   product: Product = {} as Product;
   productForm: FormGroup = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(3)]],
@@ -53,17 +54,11 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
     price: ['1', [Validators.required, Validators.min(1)]],
     stock: ['', [Validators.required, Validators.min(0)]]
   });
+
   office: Office | undefined = this.authService.user.office;
   selectedOffice: Office = {} as Office;
-  changeSelectedOffice: Office = {} as Office;
+  changeSelectedOffice: Office | undefined = this.office;
   offices!: Office[];
-  movementForm: FormGroup = this.fb.group({
-    isOut: [true, [Validators.required]],
-    note: [''],
-    isConfirmed: [false],
-    quantity: [1, [Validators.required]]
-  });
-  selectedMovement: isOut = { value: 'Salida', key: true };
 
   constructor(private fb: FormBuilder, private productService: ProductsService,
     private confirmationService: ConfirmationService, private msgService: MessageService,
@@ -138,7 +133,6 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
           });
       }
     });
-
   }
 
   openEditDialog(product: Product) {
@@ -153,12 +147,6 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
     this.dialogDisplay = true;
   }
 
-  openMovementDialog(data: Product) {
-    this.product = data;
-    this.dialogMovement = true;
-    console.log('OFFICINA SELECCIONADA: ' + this.selectedOffice.name);
-  }
-
   saveProduct() {
     if(this.productForm.invalid) {
       this.productForm.markAllAsTouched();
@@ -169,7 +157,6 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
       return;
     }
     productToSave.office = this.office;
-
     if(this.product._id) {
       productToSave._id = this.product._id;
       this.productService.updateProduct( productToSave )
@@ -203,18 +190,26 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
     this.dialogDisplay = false;
   }
 
-  saveMovement() {
-    console.log(this.movementForm.value);
-    console.log('OFFICE: ' + JSON.stringify((this.changeSelectedOffice.name === undefined) ? this.selectedOffice : this.changeSelectedOffice));
-    console.log('USERNAME: ' + this.authService.user.name);
-    console.log('PRODUCT: ' + JSON.stringify(this.product));
-    this.dialogMovement = false;
-
+  openMovementDialog(data: Product) {
+    this.product = data;
+    this.dialogMovement = true;
   }
 
-  // delete this function
- movementSelect($event: any) {
-    console.log(this.movementForm.value);
+  closeMovementDialog(res: ResForm<Movement>) {
+    if(res.ok){
+      this.products = [];
+      this.msgService.add({ severity: 'success', summary: 'OK', 
+        detail: 'Se ha creado un nuevo movimiento exitosamente', life: 2000});
+      this.productService.findAllProducts(this.changeSelectedOffice!)
+        .subscribe( res => {
+          this.products = res;
+      }); 
+      this.dialogMovement = false;
+    } else {
+      this.msgService.add({ severity: 'error', summary: 'ERROR', 
+        detail: 'Ha ocurrido un error al intentar crear un nuevo movimiento', life: 2000});
+      this.dialogDisplay = false;        
+    }
   }
 
 }
