@@ -1,3 +1,4 @@
+import { User } from "src/app/auth/interfaces/interfaces";
 
 export interface Office {
     _id?: string;
@@ -45,12 +46,22 @@ export interface Movement {
     _id?: string;
     isOut: boolean;
     office: Office;
-    user: string;
+    user: User;
     note?: string;
     isConfirmed?: boolean;
     products: [
         QuantityProduct
     ]
+}
+
+export interface MovementDto {
+    _id?: string;
+    isOut: string;
+    office: string;
+    user: string;
+    note?: string;
+    isConfirmed?: boolean;
+    products: [ QuantityProduct ];
 }
 
 export interface QuantityProduct {

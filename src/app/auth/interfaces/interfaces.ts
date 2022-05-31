@@ -7,6 +7,15 @@ export interface User {
     office?: Office;
 }
 
+export interface UserDto {
+    _id?: string;
+    name: string;
+    email: string;
+    isActive: boolean;
+    password: string;
+    office?: Office; 
+}
+
 export interface ServerResponse {
     ok: boolean;
     uid?: string;

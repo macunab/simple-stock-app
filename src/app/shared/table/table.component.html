@@ -38,7 +38,8 @@
                     *ngFor="let but of buttons"
                     icon="{{ but.icon }}"
                     (click)="sendData( data.values, but.functionType )"
-                    class="{{ but.class }}" pTooltip="{{ but.tooltipText }}" tooltipPosition="top">
+                    class="{{ but.class }}" pTooltip="{{ but.tooltipText }}" tooltipPosition="top"
+                    disabled="{{ data.values['isConfirmed'] }}">
                 </button>
             </td>
         </tr>

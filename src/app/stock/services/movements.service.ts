@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, map, of } from 'rxjs';
 import { ServerResponse } from 'src/app/auth/interfaces/interfaces';
 import { environment } from 'src/environments/environment';
-import { Movement } from '../interfaces/interfaces';
+import { ArrayResp, Movement, MovementDto } from '../interfaces/interfaces';
 import { TransformArrayDataService } from './transform-array-data.service';
 
 @Injectable({
@@ -26,5 +26,18 @@ export class MovementsService {
         //map( res => res.ok )
        //catchError(error => of(error))
       );
-  }  
+  }
+
+  findAllMovements() {
+    const url: string = `${ this.baseUrl }/movements/`;
+    return this.http.get<ArrayResp<Movement>>( url, { headers: this.headers })
+      .pipe(
+        map( res => {
+          const dataDto = res.values.map((value) => {
+            const val = { _id: value._id, isOut: (value.isOut) ? 'SALIDA':'ENTRADA', office: value.office.name, 
+              user: value.user}
+          });
+        })
+      );
+  }
 }

@@ -36,7 +36,7 @@ export class CreateMovementComponent {
     const movement: Movement = this.movementForm.value;
     movement.office = this.office!;
     movement.products = [{product: this.product._id!, quantity: this.movementForm.controls['quantity'].value}];
-    movement.user = this.authService.user.uid;
+    movement.user.uid = this.authService.user.uid;
     this.movementService.createMovementOfOneProduct(movement)
       .subscribe( res => {
         if(res.ok){
