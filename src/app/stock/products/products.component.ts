@@ -19,7 +19,7 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
   products!: Row<Product>[];
   productColumns: Column<Product>[] = [
     { field: 'name', title: 'Nombre' },
-    { field: 'price', title: 'Precio'},
+    { field: 'price', title: 'Precio', currency: true},
     { field: 'stock', title: 'Stock'},
   ];
   buttons: ButtonSettings[] = [

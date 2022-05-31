@@ -2,6 +2,7 @@
 export interface Column<T> {
     field: keyof T;
     title: string;
+    currency?: boolean;
 }
 
 export interface Row<T> {

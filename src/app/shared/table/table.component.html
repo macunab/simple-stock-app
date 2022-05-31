@@ -15,7 +15,9 @@
 </p-toolbar>
 
 <p-table #table [columns]="headers" [value]="rows" responsiveLayout="stack" 
-    [globalFilterFields]="filters" [rows]="3" [paginator]="true">
+    [globalFilterFields]="filters" [rows]="3" [paginator]="true" 
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+    [showCurrentPageReport]="true">
     <ng-template pTemplate="header" let-columns>
         <tr>
             <th *ngFor="let col of columns">
@@ -29,7 +31,10 @@
     <ng-template pTemplate="body" let-data let-columns="columns">
         <tr>
             <td *ngFor="let col of columns">
-                {{data.values[col.field]}}
+                <!--<div *ngIf="col.pipe === 'currency'">
+                    {{data.values[col.field] | currency}}
+                </div>-->
+                {{col.currency ? (data.values[col.field] | currency) : data.values[col.field]}}
             </td>
             <td *ngIf="buttons.length">
                 <button pButton label="{{ but.title }}"
@@ -40,5 +45,10 @@
                 </button>
             </td>
         </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+            En total hay {{rows ? rows.length : 0 }} entradas.
+        </div>
     </ng-template>
 </p-table>
