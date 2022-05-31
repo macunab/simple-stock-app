@@ -79,7 +79,11 @@ export class SidebarComponent implements OnInit {
       },
       {
         label: 'Salir',
-        icon:'pi pi-fw pi-power-off'
+        icon:'pi pi-fw pi-power-off',
+        command: () => {
+          localStorage.clear();
+          this.router.navigateByUrl('login');
+        }
       }
     ];
   }

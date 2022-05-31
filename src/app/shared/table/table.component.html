@@ -31,9 +31,6 @@
     <ng-template pTemplate="body" let-data let-columns="columns">
         <tr>
             <td *ngFor="let col of columns">
-                <!--<div *ngIf="col.pipe === 'currency'">
-                    {{data.values[col.field] | currency}}
-                </div>-->
                 {{col.currency ? (data.values[col.field] | currency) : data.values[col.field]}}
             </td>
             <td *ngIf="buttons.length">
