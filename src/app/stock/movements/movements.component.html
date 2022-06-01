@@ -1,1 +1,2 @@
-<p>movements works!</p>
+<app-table [headers]="movementColumns" [rows]="movements" [buttons]="buttons" [filters]="movementSearchFilter"
+    (parentMethod)="getTableEvent($event)" (addMethod)="openAddDialog($event)"></app-table>

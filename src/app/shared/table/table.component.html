@@ -34,13 +34,14 @@
                 {{col.currency ? (data.values[col.field] | currency) : data.values[col.field]}}
             </td>
             <td *ngIf="buttons.length">
+               <span *ngFor="let but of buttons">
                 <button pButton label="{{ but.title }}"
-                    *ngFor="let but of buttons"
+                    *ngIf="data.values['isConfirmed'] && but.functionType == 'confirm' ? false : true"
                     icon="{{ but.icon }}"
                     (click)="sendData( data.values, but.functionType )"
                     class="{{ but.class }}" pTooltip="{{ but.tooltipText }}" tooltipPosition="top"
-                    disabled="{{ data.values['isConfirmed'] }}">
-                </button>
+                    >
+                </button></span>
             </td>
         </tr>
     </ng-template>
