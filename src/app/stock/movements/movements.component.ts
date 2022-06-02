@@ -3,19 +3,21 @@ import { ButtonSettings, Column, GenericTableEvent, Row } from 'src/app/shared/i
 import { Movement, MovementDto } from '../interfaces/interfaces';
 import { MovementsService } from '../services/movements.service';
 import { TransformArrayDataService } from '../services/transform-array-data.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-movements',
   templateUrl: './movements.component.html',
   styles: [
-  ]
+  ],
+  providers: [MessageService]
 })
 export class MovementsComponent implements OnInit {
 
   movements!: Row<MovementDto>[];
   movementsDb!: Movement[];
   movementColumns: Column<MovementDto>[] = [
-    { field: 'createdAt', title: 'Fecha de creacion'},
+    { field: 'createdAt', title: 'Fecha de creacion', date: true},
     { field: 'office', title: 'Sucursal' },
     { field: 'user', title: 'Usuario' },
     { field: 'isOut', title: 'Tipo' },
@@ -35,12 +37,6 @@ export class MovementsComponent implements OnInit {
       tooltipText: 'Editar'
     },
     {
-      class: 'p-button-rounded p-button-text p-button-danger mr-2',
-      functionType: 'delete',
-      icon: 'pi pi-trash',
-      tooltipText: 'Eliminar'
-    },
-    {
       class: 'pi-button-rounded p-button-text p-button-help',
       functionType: 'confirm',
       icon: 'pi pi-check',
@@ -48,8 +44,11 @@ export class MovementsComponent implements OnInit {
     }
   ];
   movementSearchFilter: string[] = ['values.office', 'values.user', 'values.isOut'];
+  dialogDisplay: boolean = false;
 
-  constructor(private movementService: MovementsService, private transform: TransformArrayDataService<MovementDto>) { }
+  constructor(private movementService: MovementsService, 
+    private transform: TransformArrayDataService<MovementDto>,
+    private messageService: MessageService, private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
     this.movementService.findAllMovements()
@@ -74,10 +73,9 @@ export class MovementsComponent implements OnInit {
       case 'edit':
         //this.openEditDialog($event.data);
         break;
-      case 'delete':
-        //this.openDeleteDialog($event.data);
+      case 'details':
         break;
-      case 'movement':
+      case 'confirm':
         console.log('Se ha creado un movimiento');
         //this.openMovementDialog($event.data);
         break;                
@@ -85,7 +83,7 @@ export class MovementsComponent implements OnInit {
   }
 
   openAddDialog($event: boolean) {
-    
+    this.dialogDisplay = true;
   }
 
 }

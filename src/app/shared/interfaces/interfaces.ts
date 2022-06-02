@@ -3,6 +3,7 @@ export interface Column<T> {
     field: keyof T;
     title: string;
     currency?: boolean;
+    date?: boolean;
 }
 
 export interface Row<T> {

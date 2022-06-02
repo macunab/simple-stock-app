@@ -1,2 +1,11 @@
+<h3>Movimientos:</h3>
 <app-table [headers]="movementColumns" [rows]="movements" [buttons]="buttons" [filters]="movementSearchFilter"
     (parentMethod)="getTableEvent($event)" (addMethod)="openAddDialog($event)"></app-table>
+
+<p-dialog header="Formulario movimiento" [modal]="true" [style]="{width: '550px'}" 
+    [(visible)]="dialogDisplay" [draggable]="false" [resizable]="false" [dismissableMask]="true">
+</p-dialog>
+
+<p-toast></p-toast>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

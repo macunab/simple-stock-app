@@ -31,15 +31,15 @@ export class MovementsService {
   findAllMovements() {
     const url: string = `${ this.baseUrl }/movements/`;
     return this.http.get<ArrayResp<Movement>>( url, { headers: this.headers })
+      .pipe();
+  }
+
+  deleteMovement(id: string) {
+    const url: string = `${ this.baseUrl }/movements/${id}`;
+    return this.http.delete<ServerResponse>( url, { headers: this.headers })
       .pipe(
-       /* map( res => {
-          const dataDto = res.values.map((value) => {
-            const val = { _id: (value._id ? value._id : ''), isOut: (value.isOut) ? 'SALIDA':'ENTRADA', office: value.office.name, 
-              user: value.user, note: (value.note ? value.note : ''), isConfirmed: (value.isConfirmed ? value.isConfirmed : false), products: value.products };
-            return val;
-          const data = this.transform.transformData(dataDto);    
-          });
-        })*/
+        map( res => res.ok),
+        catchError( err => of(err.ok))
       );
   }
 }
