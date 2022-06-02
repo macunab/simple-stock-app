@@ -15,6 +15,7 @@ export class MovementsComponent implements OnInit {
   movements!: Row<MovementDto>[];
   movementsDb!: Movement[];
   movementColumns: Column<MovementDto>[] = [
+    { field: 'createdAt', title: 'Fecha de creacion'},
     { field: 'office', title: 'Sucursal' },
     { field: 'user', title: 'Usuario' },
     { field: 'isOut', title: 'Tipo' },
@@ -42,11 +43,11 @@ export class MovementsComponent implements OnInit {
     {
       class: 'pi-button-rounded p-button-text p-button-help',
       functionType: 'confirm',
-      icon: 'pi pi-book',
+      icon: 'pi pi-check',
       tooltipText: 'Confirmar'
     }
   ];
-  movementSearchFilter: string[] = ['values.office', 'values.user', 'value.isOut'];
+  movementSearchFilter: string[] = ['values.office', 'values.user', 'values.isOut'];
 
   constructor(private movementService: MovementsService, private transform: TransformArrayDataService<MovementDto>) { }
 
@@ -61,7 +62,8 @@ export class MovementsComponent implements OnInit {
   movementsDbToMovements() {
     const data = this.movementsDb.map((value) => {
       const val = { _id: (value._id ? value._id : ''), isOut: (value.isOut) ? 'SALIDA':'ENTRADA', office: value.office.name, 
-              user: value.user.name, note: (value.note ? value.note : ''), isConfirmed: (value.isConfirmed ? value.isConfirmed : false), products: value.products };
+              user: value.user.name, note: (value.note ? value.note : ''), isConfirmed: (value.isConfirmed ? value.isConfirmed : false),
+              products: value.products, createdAt: value.createdAt };
       return val;
     });
     this.movements = this.transform.transformData(data);

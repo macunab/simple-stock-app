@@ -49,6 +49,7 @@ export interface Movement {
     user: User;
     note?: string;
     isConfirmed?: boolean;
+    createdAt?: Date;
     products: [
         QuantityProduct
     ]
@@ -61,6 +62,7 @@ export interface MovementDto {
     user: string;
     note?: string;
     isConfirmed?: boolean;
+    createdAt?: Date;
     products: [ QuantityProduct ];
 }
 
