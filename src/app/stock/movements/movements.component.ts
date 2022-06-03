@@ -3,7 +3,8 @@ import { ButtonSettings, Column, GenericTableEvent, Row } from 'src/app/shared/i
 import { Movement, MovementDto } from '../interfaces/interfaces';
 import { MovementsService } from '../services/movements.service';
 import { TransformArrayDataService } from '../services/transform-array-data.service';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-movements',
@@ -48,7 +49,7 @@ export class MovementsComponent implements OnInit {
 
   constructor(private movementService: MovementsService, 
     private transform: TransformArrayDataService<MovementDto>,
-    private messageService: MessageService, private confirmationService: ConfirmationService) { }
+    private messageService: MessageService, private router: Router) { }
 
   ngOnInit(): void {
     this.movementService.findAllMovements()
@@ -83,7 +84,8 @@ export class MovementsComponent implements OnInit {
   }
 
   openAddDialog($event: boolean) {
-    this.dialogDisplay = true;
+    //this.dialogDisplay = true;
+    this.router.navigateByUrl('movements/add');
   }
 
 }

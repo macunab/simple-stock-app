@@ -1,6 +1,6 @@
 <p-toolbar>
     <div class="p-toolbar-group-left">
-        <button pButton icon="pi pi-plus" (click)="addEvent(true)" class="p-button-sm p-button-success"
+        <button pButton icon="pi pi-plus" (click)="addEvent(true)" class="p-button-sm p-button-success mb-1 md:mb-0"
             label="Nuevo"></button>
     </div>
     
@@ -35,13 +35,13 @@
             </td>
             <td *ngIf="buttons.length">
                <span *ngFor="let but of buttons">
-                <button pButton label="{{ but.title }}"
-                    *ngIf="data.values['isConfirmed'] && but.functionType == 'confirm' ? false : true"
+                <p-button label="{{ but.title }}"
+                    *ngIf="data.values['isConfirmed'] && (but.functionType == 'confirm' || but.functionType == 'edit' ) ? false : true"
                     icon="{{ but.icon }}"
                     (click)="sendData( data.values, but.functionType )"
-                    class="{{ but.class }}" pTooltip="{{ but.tooltipText }}" tooltipPosition="top"
+                    styleClass="{{ but.class }}" pTooltip="{{ but.tooltipText }}" tooltipPosition="top"
                     >
-                </button></span>
+                </p-button></span>
             </td>
         </tr>
     </ng-template>

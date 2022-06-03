@@ -32,15 +32,24 @@ export class ProductsService {
           const data = this.transform.transformData(products);
           return data;
         }),
-        catchError( error => of(error.ok))
+        catchError( err => of(err.ok))
       );
-  } 
+  }
+
+  findAllProductsWithoutTransformation() {
+    const url: string = `${ this.baseUrl }/products`;
+    return this.http.get<Product[]>( url, { headers: this.headers })
+      .pipe(
+        map( res => res.values ),
+        catchError(err => of(err.ok))
+      );
+  }
   
   saveProduct(product: Product) {
     const url: string = `${ this.baseUrl }/products/create`;
     return this.http.post<ServerResponse>( url, product, { headers: this.headers })
       .pipe(
-        catchError(error => of(error.ok))
+        catchError(err => of(err.ok))
       );
   }
 
@@ -49,7 +58,7 @@ export class ProductsService {
     return this.http.delete<ServerResponse>( url, { headers: this.headers } )
       .pipe(
         map( res => res.ok ),
-        catchError( error => of(error.ok))
+        catchError( err => of(err.ok))
       );
   }
 
@@ -59,7 +68,7 @@ export class ProductsService {
     return this.http.put<ServerResponse>( url, {name, description, price }, { headers: this.headers })
       .pipe(
         map( res => res.ok ),
-        catchError( error => of(error.ok))
+        catchError( err => of(err.ok))
       );
 
   }

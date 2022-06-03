@@ -21,11 +21,7 @@ export class MovementsService {
   // create a movement from a single product (products page)  
   createMovementOfOneProduct(movement: Movement) {
     const url: string = `${this.baseUrl}/movements/create`;
-    return this.http.post<ServerResponse>( url, movement, { headers: this.headers })
-      .pipe(
-        //map( res => res.ok )
-       //catchError(error => of(error))
-      );
+    return this.http.post<ServerResponse>( url, movement, { headers: this.headers });    
   }
 
   findAllMovements() {
@@ -34,6 +30,12 @@ export class MovementsService {
       .pipe();
   }
 
+  /**
+   * Esta funcionalidad esta en duda no se tendria que poder eliminar un movimiento 
+   * que este confirmado, pero quisas se podria eliminar un movimiento que ya este confirmado...
+   * @param id 
+   * @returns 
+   */
   deleteMovement(id: string) {
     const url: string = `${ this.baseUrl }/movements/${id}`;
     return this.http.delete<ServerResponse>( url, { headers: this.headers })

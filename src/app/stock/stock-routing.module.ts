@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './main/main.component';
+import { CreateMovementComponent } from './movements/create-movement.component';
 import { MovementsComponent } from './movements/movements.component';
 import { OfficesComponent } from './offices/offices.component';
 import { ProductsComponent } from './products/products.component';
@@ -34,6 +35,7 @@ const routes: Routes = [
     component: MainComponent,
     children: [
       { path: '', component: MovementsComponent },
+      { path: 'add', component: CreateMovementComponent },
       { path: '**', redirectTo: '' }
     ]
   },
