@@ -71,6 +71,16 @@ export interface QuantityProduct {
     quantity: number;
 }
 
+export interface ProductQuantity {
+    product: Product;
+    quantity: number;
+}
+
+export interface ProductStock {
+    product: ProductDb;
+    stock: number;
+}
+
 export interface ResForm<T> {
     ok: boolean;
     data: T;

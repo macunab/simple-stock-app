@@ -1,1 +1,100 @@
-<p>create-movement works!</p>
+<h4>Crear movimiento:</h4>
+<p-card>
+    <form autocomplete="off" class="p-2"
+        [formGroup]="movementForm"
+        (ngSubmit)="saveMovement()">
+        <div class="p-fluid grid">
+            <div class="field col-12 md:col-9">
+                <label for="office">Sucursal</label>
+                <p-dropdown class="col-12 md:col-6" [options]="offices" formControlName="office" placeholder="Seleccione una sucursal"
+                    (onChange)="selectOffice($event)" optionLabel="name" name="office" id="office" ></p-dropdown>  
+            </div>
+            <div class="field col-8">
+                <p-dropdown #isOut [options]="movementsType" formControlName="isOut"
+                    (onChange)="selectMovementType($event)"optionLabel="value" optionValue="key" id="isOut"></p-dropdown>   
+            </div>
+            <div class="field col-4">
+                <div class="field-checkbox">
+                    <p-checkbox formControlName="isConfirmed" [binary]="true" inputId="binary"></p-checkbox>
+                    <label for="binary">Confirmar?</label>
+                </div>
+            </div>
+            <div class="field col-12 md:col-8">
+                <label for="note">Notas</label>
+                <textarea pInputTextarea class="p-inputtext-sm"
+                formControlName="note"
+                id="note"></textarea> 
+            </div>
+            <div class="field col-12 md:col-6">
+                <label for="addProduct">Productos</label>
+                <button id="addProduct" icon="pi pi-plus" pButton type="button"
+                class="p-button-outlined p-button-success p-button-sm ml-2" (click)="openProducs()" [disabled]="!products"></button>
+            </div>
+            <div class="field col-12 border-round">
+
+                <div *ngIf="!(selectedProducts.length > 0)">
+                    <h2 class="flex align-items-center justify-content-center">Por favor seleccione por lo menos un producto junto a su cantidad</h2>
+                </div>
+                <div *ngIf="">
+               
+                </div>
+            
+            </div>
+        </div>
+        <button icon="pi pi-check" pButton type="submit" 
+                class="p-button-text" label="Guardar" [disabled]="!(selectedProducts.length > 0)"></button>  
+    </form>
+</p-card>
+
+<p-dialog header="Productos" [modal]="true" [style]="{width: '750px'}" position="top" 
+    [(visible)]="productsDialogDisplay" [draggable]="false" [resizable]="false" [dismissableMask]="true">
+    <p-table #productsQuantity responsiveLayout="stack" [value]="products" [rows]="3" [paginator]="true"
+    [globalFilterFields]="['product.name']" [(selection)]="selectedProducts" [selectionPageOnly]="true">
+    <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-center">
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText #productSearchInput type="text" 
+                    (input)="productsQuantity.filterGlobal( productSearchInput.value, 'contains')"
+                    placeholder="Search..." />                
+            </span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th></th>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Stock</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+        <tr>
+            <td>
+                <p-tableCheckbox [value]="product" [disabled]="product.product.stock == 0 && isOut.value"></p-tableCheckbox>
+            </td>
+            <td>
+                <span class="p-column-title">Nombre:</span>{{ product.product.name }}
+            </td>
+            <td pEditableColumn>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <p-inputNumber inputId="quantity"
+                        [(ngModel)]="product.quantity"
+                        [max]="product.product.stock" [min]="1"></p-inputNumber>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{ product.quantity }}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <span class="p-column-title">Stock:</span> {{ product.product.stock }}
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+<p-button icon="pi pi-check" styleClass="mt-1" class="p-button-rounded p-button-text p-button-info" styleClass="mt-3"
+    (click)="selectProducts()" label="Seleccionar"></p-button>
+</p-dialog>
+

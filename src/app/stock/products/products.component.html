@@ -72,5 +72,5 @@
 <!-- Create Movement/Document Modal -->
 <p-dialog header="Crear movimiento" [modal]="true" [style]="{width: '700px'}" 
     [draggable]="false" [resizable]="false" [dismissableMask]="false" [(visible)]="dialogMovement">
-   <app-create-movement [product]="product" [office]="changeSelectedOffice" (formResponse)="closeMovementDialog($any($event))"></app-create-movement>
+   <app-product-create-movement [product]="product" [office]="changeSelectedOffice" (formResponse)="closeMovementDialog($any($event))"></app-product-create-movement>
 </p-dialog>

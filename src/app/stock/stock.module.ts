@@ -12,6 +12,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DropdownModule } from 'primeng/dropdown';
 import { CheckboxModule } from 'primeng/checkbox';
+import { CardModule } from 'primeng/card';
+import { TableModule } from 'primeng/table';
 
 import { ConfirmationService } from 'primeng/api';
 
@@ -19,9 +21,10 @@ import { StockRoutingModule } from './stock-routing.module';
 import { OfficesComponent } from './offices/offices.component';
 import { ProductsComponent } from './products/products.component';
 import { MovementsComponent } from './movements/movements.component';
+import { CreateMovementComponent } from './movements/create-movement.component';
 import { MainComponent } from './main/main.component';
 import { SharedModule } from '../shared/shared.module';
-import { CreateMovementComponent } from './products/create-movement.component';
+import { ProductCreateMovementComponent } from './products/product-create-movement.component';
 import { CreateProductComponent } from './products/create-product.component';
 
 
@@ -35,6 +38,7 @@ import { CreateProductComponent } from './products/create-product.component';
     MovementsComponent,
     MainComponent,
     CreateMovementComponent,
+    ProductCreateMovementComponent,
     CreateProductComponent
   ],
   imports: [
@@ -51,7 +55,9 @@ import { CreateProductComponent } from './products/create-product.component';
     InputTextareaModule,
     InputNumberModule,
     DropdownModule,
-    CheckboxModule
+    CheckboxModule,
+    CardModule,
+    TableModule
   ],
   providers: [
     ConfirmationService

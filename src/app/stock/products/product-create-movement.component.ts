@@ -1,16 +1,16 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth/service/auth.service';
-import { isOut, Movement, Office, Product, ResForm, QuantityProduct } from '../interfaces/interfaces';
+import { isOut, Movement, Office, Product, ResForm } from '../interfaces/interfaces';
 import { MovementsService } from '../services/movements.service';
 
 @Component({
-  selector: 'app-create-movement',
-  templateUrl: './create-movement.component.html',
+  selector: 'app-product-create-movement',
+  templateUrl: './product-create-movement.component.html',
   styles: [
   ]
 })
-export class CreateMovementComponent {
+export class ProductCreateMovementComponent {
 
   @Input() product!: Product;
   @Input() office!: Office | undefined;
