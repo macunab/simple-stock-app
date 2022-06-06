@@ -74,6 +74,7 @@ export interface QuantityProduct {
 export interface ProductQuantity {
     product: Product;
     quantity: number;
+    stock?: number;
 }
 
 export interface ProductStock {
@@ -84,4 +85,15 @@ export interface ProductStock {
 export interface ResForm<T> {
     ok: boolean;
     data: T;
+}
+
+export interface Document {
+    _id?: string;
+    isOut: boolean;
+    office: Office;
+    user: string;
+    note?: string;
+    isConfirmed?: boolean;
+    createdAt?: Date;
+    products: ProductQuantity[]
 }

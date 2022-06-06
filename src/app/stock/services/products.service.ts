@@ -36,11 +36,18 @@ export class ProductsService {
       );
   }
 
-  findAllProductsWithoutTransformation() {
+  findAllProductsWithoutTransformation(office: Office) {
     const url: string = `${ this.baseUrl }/products`;
-    return this.http.get<Product[]>( url, { headers: this.headers })
+    return this.http.get<ArrayResp<ProductDb>>( url, { headers: this.headers })
       .pipe(
-        map( res => res.values ),
+        map( res => {
+          const products = res.values.map( (val) => ({
+            product: val,
+            quantity: 1,
+            stock: val.stockOffices.find( (el: any) => el.office == office._id)?.stock
+          }));
+          return products;
+        }),
         catchError(err => of(err.ok))
       );
   }

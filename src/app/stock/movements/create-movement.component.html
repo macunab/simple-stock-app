@@ -1,5 +1,5 @@
 <h4>Crear movimiento:</h4>
-<p-card>
+<p-card styleClass="mx-0 md:mx-6">
     <form autocomplete="off" class="p-2"
         [formGroup]="movementForm"
         (ngSubmit)="saveMovement()">
@@ -32,12 +32,25 @@
             </div>
             <div class="field col-12 border-round">
 
-                <div *ngIf="!(selectedProducts.length > 0)">
+                <div *ngIf="!selectedProducts.length; else productsCart">
                     <h2 class="flex align-items-center justify-content-center">Por favor seleccione por lo menos un producto junto a su cantidad</h2>
                 </div>
-                <div *ngIf="">
-               
-                </div>
+                <ng-template #productsCart>
+                    <p-table responsiveLayout="stack" [value]="selectedProducts" [rows]="3" [paginator]="true">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Cantidad</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-product>
+                            <tr>
+                                <td><span class="p-column-title">Nombre:</span>{{ product.product.name }}</td>
+                                <td><span class="p-column-title">Cantidad:</span>{{ product.quantity }}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </ng-template>
             
             </div>
         </div>
@@ -71,7 +84,7 @@
     <ng-template pTemplate="body" let-product>
         <tr>
             <td>
-                <p-tableCheckbox [value]="product" [disabled]="product.product.stock == 0 && isOut.value"></p-tableCheckbox>
+                <p-tableCheckbox [value]="product" [disabled]="product.stock == 0 && isOut.value"></p-tableCheckbox>
             </td>
             <td>
                 <span class="p-column-title">Nombre:</span>{{ product.product.name }}
@@ -81,7 +94,7 @@
                     <ng-template pTemplate="input">
                         <p-inputNumber inputId="quantity"
                         [(ngModel)]="product.quantity"
-                        [max]="product.product.stock" [min]="1"></p-inputNumber>
+                        [max]="product.stock" [min]="1"></p-inputNumber>
                     </ng-template>
                     <ng-template pTemplate="output">
                         {{ product.quantity }}
@@ -89,7 +102,7 @@
                 </p-cellEditor>
             </td>
             <td>
-                <span class="p-column-title">Stock:</span> {{ product.product.stock }}
+                <span class="p-column-title">Stock:</span> {{ product.stock }}
             </td>
         </tr>
     </ng-template>
