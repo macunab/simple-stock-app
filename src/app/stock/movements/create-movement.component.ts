@@ -36,7 +36,7 @@ export class CreateMovementComponent implements OnInit {
   movementFormInit() {
     this.movementForm = this.fb.group({
       isOut: [false, [Validators.required]],
-      note: [''],
+      notes: [''],
       isConfirmed: [false],
       office:['', [Validators.required, Validators.nullValidator]]
     });
