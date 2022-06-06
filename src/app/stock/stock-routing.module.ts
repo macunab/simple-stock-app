@@ -35,6 +35,7 @@ const routes: Routes = [
     component: MainComponent,
     children: [
       { path: '', component: MovementsComponent },
+      { path: '/:crt', component: MovementsComponent },
       { path: 'add', component: CreateMovementComponent },
       { path: '**', redirectTo: '' }
     ]

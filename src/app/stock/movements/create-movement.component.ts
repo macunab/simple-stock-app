@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/service/auth.service';
 import { Document, isOut, Office, Product, ProductQuantity } from '../interfaces/interfaces';
 import { MovementsService } from '../services/movements.service';
@@ -25,7 +26,7 @@ export class CreateMovementComponent implements OnInit {
 
   constructor( private fb: FormBuilder, private movementService: MovementsService, 
       private officeService: OfficesService, private productService: ProductsService,
-      private authService: AuthService ) {}
+      private authService: AuthService, private route: Router ) {}
 
   ngOnInit(): void {
     this.officeService.findAllOfficeWithoutTransformation()
@@ -48,23 +49,18 @@ export class CreateMovementComponent implements OnInit {
       console.log('Hay un error en el formulario');
       return;
     }
-
     const movement: Document = this.movementForm.value;
     movement.user = this.authService.user.uid;
     movement.products = this.selectedProducts;
-
     this.movementService.createMovement(movement)
       .subscribe( res => {
         if( res ) {
           console.log('Se ha creado un movimiento exitosamente');
+          this.route.navigate(['movements'], { queryParams: { crt: true }});
         } else {
           console.log('ha ocurrido un error');
         }
       });
-
-    console.log(movement);
-    console.log(this.selectedProducts);
-    
   }
 
   openProducs = () => {

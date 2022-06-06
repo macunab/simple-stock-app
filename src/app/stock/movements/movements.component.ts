@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { ButtonSettings, Column, GenericTableEvent, Row } from 'src/app/shared/interfaces/interfaces';
 import { Movement, MovementDto } from '../interfaces/interfaces';
 import { MovementsService } from '../services/movements.service';
 import { TransformArrayDataService } from '../services/transform-array-data.service';
 import { MessageService } from 'primeng/api';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-movements',
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   ],
   providers: [MessageService]
 })
-export class MovementsComponent implements OnInit {
+export class MovementsComponent implements OnInit, AfterViewInit {
 
   movements!: Row<MovementDto>[];
   movementsDb!: Movement[];
@@ -46,10 +46,17 @@ export class MovementsComponent implements OnInit {
   ];
   movementSearchFilter: string[] = ['values.office', 'values.user', 'values.isOut'];
   dialogDisplay: boolean = false;
+  msgCreate: string = '';
 
   constructor(private movementService: MovementsService, 
     private transform: TransformArrayDataService<MovementDto>,
-    private messageService: MessageService, private router: Router) { }
+    private messageService: MessageService, private router: Router, private route: ActivatedRoute, 
+      private cd: ChangeDetectorRef ) {
+      this.route.queryParams.subscribe( params => {
+        const val = params['crt'];
+        this.msgCreate = val;
+      })
+    }
 
   ngOnInit(): void {
     this.movementService.findAllMovements()
@@ -57,6 +64,11 @@ export class MovementsComponent implements OnInit {
         this.movementsDb = res.values;
         this.movementsDbToMovements();
       });
+  }
+
+  ngAfterViewInit(): void {
+    this.showToastMessage();
+    this.cd.detectChanges();
   }
 
   movementsDbToMovements() {
@@ -73,8 +85,11 @@ export class MovementsComponent implements OnInit {
     switch($event.type) {
       case 'edit':
         //this.openEditDialog($event.data);
+        console.log('EDICION DE DATOS');
+        //this.editDialog();
         break;
       case 'details':
+        console.log('detalles de movimiento');
         break;
       case 'confirm':
         console.log('Se ha creado un movimiento');
@@ -86,6 +101,20 @@ export class MovementsComponent implements OnInit {
   openAddDialog($event: boolean) {
     //this.dialogDisplay = true;
     this.router.navigateByUrl('movements/add');
+  }
+
+  showToastMessage() {
+    if(this.msgCreate === undefined ) {
+      return;
+    }
+
+    if(this.msgCreate === 'true') {
+      this.messageService.add({ severity: 'success', summary: 'OK', 
+        detail: 'Se ha guardado el movimiento exitosamente', life: 2000});
+    } else {
+      this.messageService.add({ severity: 'error', summary: 'ERROR', 
+      detail: 'Se ha producido un error al intentar guardar un nuevo movimiento', life: 2000});
+    }
   }
 
 }
