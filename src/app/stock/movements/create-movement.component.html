@@ -20,10 +20,10 @@
                 </div>
             </div>
             <div class="field col-12 md:col-8">
-                <label for="note">Notas</label>
+                <label for="notes">Notas</label>
                 <textarea pInputTextarea class="p-inputtext-sm"
-                formControlName="note"
-                id="note"></textarea> 
+                formControlName="notes"
+                id="notes"></textarea> 
             </div>
             <div class="field col-12 md:col-6">
                 <label for="addProduct">Productos</label>
@@ -94,7 +94,7 @@
                     <ng-template pTemplate="input">
                         <p-inputNumber inputId="quantity"
                         [(ngModel)]="product.quantity"
-                        [max]="product.stock" [min]="1"></p-inputNumber>
+                        [max]="(isOut.value) ? product.stock : 10000" [min]="1"></p-inputNumber>
                     </ng-template>
                     <ng-template pTemplate="output">
                         {{ product.quantity }}

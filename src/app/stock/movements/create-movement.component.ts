@@ -17,6 +17,7 @@ export class CreateMovementComponent implements OnInit {
   movementsType: isOut[] = [{ value: 'Entrada', key: false }, { value: 'Salida', key: true }];
   offices!: Office[];
   office: Office = this.authService.user.office!;
+  selectedOffice: Office = {} as Office;
   products!: ProductQuantity[];
   selectedProducts: ProductQuantity[] = [];
   productsDialogDisplay: boolean = false;
@@ -29,13 +30,12 @@ export class CreateMovementComponent implements OnInit {
   ngOnInit(): void {
     this.officeService.findAllOfficeWithoutTransformation()
         .subscribe(res => { this.offices = res });
-    console.log(this.authService.user.office);
     this.movementFormInit();
   }
 
   movementFormInit() {
     this.movementForm = this.fb.group({
-      isOut: [false, [Validators.required]],
+      isOut: [true, [Validators.required]],
       notes: [''],
       isConfirmed: [false],
       office:['', [Validators.required, Validators.nullValidator]]
@@ -71,7 +71,6 @@ export class CreateMovementComponent implements OnInit {
     this.productsDialogDisplay = true;
   }
   selectProducts() {
-    console.log(this.selectedProducts);
     this.productsDialogDisplay = false;
   }
 
