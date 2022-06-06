@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, map, of } from 'rxjs';
 import { ServerResponse } from 'src/app/auth/interfaces/interfaces';
 import { environment } from 'src/environments/environment';
-import { ArrayResp, Document, Movement, MovementDto } from '../interfaces/interfaces';
+import { ArrayResp, Document, Movement, MovementDto, MovementSave } from '../interfaces/interfaces';
 import { TransformArrayDataService } from './transform-array-data.service';
 
 @Injectable({
@@ -19,7 +19,7 @@ export class MovementsService {
     private transform: TransformArrayDataService<Movement>) { }
 
   // create a movement from a single product (products page)  
-  createMovementOfOneProduct(movement: Movement) {
+  createMovementOfOneProduct(movement: MovementSave) {
     const url: string = `${this.baseUrl}/movements/create`;
     return this.http.post<ServerResponse>( url, movement, { headers: this.headers });    
   }

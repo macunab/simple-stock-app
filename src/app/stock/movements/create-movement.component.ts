@@ -44,9 +44,7 @@ export class CreateMovementComponent implements OnInit {
   }
 
   saveMovement() {
-
     if(this.movementForm.controls['office'].invalid) {
-      console.log('Hay un error en el formulario');
       return;
     }
     const movement: Document = this.movementForm.value;
@@ -55,10 +53,9 @@ export class CreateMovementComponent implements OnInit {
     this.movementService.createMovement(movement)
       .subscribe( res => {
         if( res ) {
-          console.log('Se ha creado un movimiento exitosamente');
           this.route.navigate(['movements'], { queryParams: { crt: true }});
         } else {
-          console.log('ha ocurrido un error');
+          this.route.navigate(['movements'], { queryParams: { crt: false }});
         }
       });
   }
@@ -81,9 +78,4 @@ export class CreateMovementComponent implements OnInit {
   selectMovementType($event: any) {
     this.selectedProducts = [];
   }
-
-  openProductsDialog(){
-    
-  }
-
 }

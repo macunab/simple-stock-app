@@ -55,6 +55,19 @@ export interface Movement {
     ]
 }
 
+export interface MovementSave {
+    _id?: string;
+    isOut: boolean;
+    office: Office;
+    user: string;
+    note?: string;
+    isConfirmed?: boolean;
+    createdAt?: Date;
+    products: [
+        QuantityProduct
+    ]
+}
+
 export interface MovementDto {
     _id?: string;
     isOut: string;
