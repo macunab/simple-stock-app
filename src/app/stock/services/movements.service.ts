@@ -53,4 +53,9 @@ export class MovementsService {
         catchError( err => of(err.ok))
       );
   }
+
+  confirmMovement(id: string) {
+    const url: string = `${ this.baseUrl }/movement/confirm/${ id }`;
+    return this.http.put<ServerResponse>( url, {headers: this.headers});
+  }
 }

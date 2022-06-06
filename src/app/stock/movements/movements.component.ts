@@ -92,10 +92,15 @@ export class MovementsComponent implements OnInit, AfterViewInit {
         console.log('detalles de movimiento');
         break;
       case 'confirm':
-        console.log('Se ha creado un movimiento');
+        this.confirmMovement($event.data._id!);
         //this.openMovementDialog($event.data);
         break;                
     }
+  }
+
+  confirmMovement($event: string) {
+    console.log($event);
+    
   }
 
   openAddDialog($event: boolean) {
@@ -107,7 +112,6 @@ export class MovementsComponent implements OnInit, AfterViewInit {
     if(this.msgCreate === undefined ) {
       return;
     }
-
     if(this.msgCreate === 'true') {
       this.messageService.add({ severity: 'success', summary: 'OK', 
         detail: 'Se ha guardado el movimiento exitosamente', life: 2000});
