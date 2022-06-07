@@ -55,7 +55,7 @@ export class MovementsService {
   }
 
   confirmMovement(id: string) {
-    const url: string = `${ this.baseUrl }/movement/confirm/${ id }`;
-    return this.http.put<ServerResponse>( url, {headers: this.headers});
+    const url: string = `${ this.baseUrl }/movements/confirm/${ id }`;
+    return this.http.put<ServerResponse>( url, {}, {headers: this.headers});
   }
 }

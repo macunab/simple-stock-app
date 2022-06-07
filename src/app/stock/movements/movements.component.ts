@@ -1,10 +1,11 @@
-import { Component, OnInit, AfterContentInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { ButtonSettings, Column, GenericTableEvent, Row } from 'src/app/shared/interfaces/interfaces';
 import { Movement, MovementDto } from '../interfaces/interfaces';
 import { MovementsService } from '../services/movements.service';
 import { TransformArrayDataService } from '../services/transform-array-data.service';
 import { MessageService } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-movements',
@@ -51,7 +52,7 @@ export class MovementsComponent implements OnInit, AfterViewInit {
   constructor(private movementService: MovementsService, 
     private transform: TransformArrayDataService<MovementDto>,
     private messageService: MessageService, private router: Router, private route: ActivatedRoute, 
-      private cd: ChangeDetectorRef ) {
+      private cd: ChangeDetectorRef, private confirmationService: ConfirmationService ) {
       this.route.queryParams.subscribe( params => {
         const val = params['crt'];
         this.msgCreate = val;
@@ -93,18 +94,27 @@ export class MovementsComponent implements OnInit, AfterViewInit {
         break;
       case 'confirm':
         this.confirmMovement($event.data._id!);
-        //this.openMovementDialog($event.data);
         break;                
     }
   }
 
-  confirmMovement($event: string) {
-    console.log($event);
-    
+  confirmMovement($event: string) {    
+    this.confirmationService.confirm({
+      message: 'Desea confirmar este movimiento?',
+      accept: () => {
+        this.movementService.confirmMovement($event)
+          .subscribe( res => {
+            if(res.ok) {
+              this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+              this.router.navigate(['movements']));            } else {
+              console.log('ERROR AL INTENTAR CONFIRMAR EL MOV: ' + res);
+            }
+          });
+      }
+  });
   }
 
   openAddDialog($event: boolean) {
-    //this.dialogDisplay = true;
     this.router.navigateByUrl('movements/add');
   }
 
