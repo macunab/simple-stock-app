@@ -11,8 +11,8 @@ export interface UserDto {
     _id?: string;
     name: string;
     email: string;
-    isActive: boolean;
-    password: string;
+    isActive?: boolean;
+    password?: string;
     office?: Office; 
 }
 

@@ -2,9 +2,33 @@
 <app-table [headers]="movementColumns" [rows]="movements" [buttons]="buttons" [filters]="movementSearchFilter"
     (parentMethod)="getTableEvent($event)" (addMethod)="openAddDialog($event)"></app-table>
 
-<p-dialog header="Formulario movimiento" [modal]="true" [style]="{width: '550px'}" 
+<p-dialog header="Detalles del movimiento" [modal]="true" [style]="{width: '750px'}" position="top"  
     [(visible)]="dialogDisplay" [draggable]="false" [resizable]="false" [dismissableMask]="true">
-</p-dialog>
+    <div>
+        <label class="align-self-center" for="sucursal"> Sucursal:  </label>
+        <h2 id="sucursal" class="align-self-center">{{ movementDetail?.office?.name }}</h2>
+    </div>
+    <div class="mt-1 flex flex-wrap md:justify-content-between justify-content-center">
+        <h3>Usuario: {{ movementDetail?.user?.name }}</h3>
+        <h3>Fecha: {{movementDetail?.createdAt | date:'short'}}</h3>
+    </div>
+    <div class="mt-1 flex flex-wrap md:justify-content-between justify-content-center">
+        <h3 class="p-4">Tipo:    {{ movementDetail?.isOut ? 'SALIDA' : 'ENTRADA'}}</h3>
+        <h3 class="p-4">Confirmado:    {{ movementDetail?.isConfirmed ? 'Si' : 'No'}}</h3>
+    </div>
+    <div>
+        <table responsiveLayout="stack">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                </tr>
+                <tr *ngFor="let product of movementDetail?.products">
+                    <td>{{ product.product.name }}</td>
+                    <td>{{ product.quantity }}</td>
+                </tr>
+        </table>
+    </div>
+</p-dialog> 
 
 <p-toast></p-toast>
 

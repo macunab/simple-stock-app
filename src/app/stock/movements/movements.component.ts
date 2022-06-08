@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { ButtonSettings, Column, GenericTableEvent, Row } from 'src/app/shared/interfaces/interfaces';
-import { Movement, MovementDto } from '../interfaces/interfaces';
+import { DocumentDto, Movement, MovementDto } from '../interfaces/interfaces';
 import { MovementsService } from '../services/movements.service';
 import { TransformArrayDataService } from '../services/transform-array-data.service';
 import { MessageService } from 'primeng/api';
@@ -48,6 +48,7 @@ export class MovementsComponent implements OnInit, AfterViewInit {
   movementSearchFilter: string[] = ['values.office', 'values.user', 'values.isOut'];
   dialogDisplay: boolean = false;
   msgCreate: string = '';
+  movementDetail!: DocumentDto;
 
   constructor(private movementService: MovementsService, 
     private transform: TransformArrayDataService<MovementDto>,
@@ -85,12 +86,11 @@ export class MovementsComponent implements OnInit, AfterViewInit {
   getTableEvent($event: GenericTableEvent<MovementDto>) {
     switch($event.type) {
       case 'edit':
-        //this.openEditDialog($event.data);
         console.log('EDICION DE DATOS');
         //this.editDialog();
         break;
       case 'details':
-        console.log('detalles de movimiento');
+        this.openDetailDialog($event.data._id!);
         break;
       case 'confirm':
         this.confirmMovement($event.data._id!);
@@ -106,7 +106,8 @@ export class MovementsComponent implements OnInit, AfterViewInit {
           .subscribe( res => {
             if(res.ok) {
               this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
-              this.router.navigate(['movements']));            } else {
+              this.router.navigate(['movements']));
+            } else {
               console.log('ERROR AL INTENTAR CONFIRMAR EL MOV: ' + res);
             }
           });
@@ -116,6 +117,15 @@ export class MovementsComponent implements OnInit, AfterViewInit {
 
   openAddDialog($event: boolean) {
     this.router.navigateByUrl('movements/add');
+  }
+
+  openDetailDialog(id: string) {
+    this.movementService.findById(id)
+      .subscribe( res => {  
+        this.movementDetail = res;
+        console.log(this.movementDetail);
+        this.dialogDisplay = true;
+      });
   }
 
   showToastMessage() {

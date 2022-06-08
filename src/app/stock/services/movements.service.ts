@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, map, of } from 'rxjs';
 import { ServerResponse } from 'src/app/auth/interfaces/interfaces';
 import { environment } from 'src/environments/environment';
-import { ArrayResp, Document, Movement, MovementDto, MovementSave } from '../interfaces/interfaces';
+import { ArrayResp, Document, DocumentDto, Movement, MovementDto, MovementSave, ResForm } from '../interfaces/interfaces';
 import { TransformArrayDataService } from './transform-array-data.service';
 
 @Injectable({
@@ -57,5 +57,13 @@ export class MovementsService {
   confirmMovement(id: string) {
     const url: string = `${ this.baseUrl }/movements/confirm/${ id }`;
     return this.http.put<ServerResponse>( url, {}, {headers: this.headers});
+  }
+
+  findById(id: string) {
+    const url: string = `${ this.baseUrl }/movements/${ id }`;
+    return this.http.get<ResForm<DocumentDto>>( url, {headers: this.headers})
+      .pipe(
+        map( res => res.data )
+      )
   }
 }

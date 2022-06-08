@@ -1,4 +1,4 @@
-import { User } from "src/app/auth/interfaces/interfaces";
+import { User, UserDto } from "src/app/auth/interfaces/interfaces";
 
 export interface Office {
     _id?: string;
@@ -105,6 +105,17 @@ export interface Document {
     isOut: boolean;
     office: Office;
     user: string;
+    note?: string;
+    isConfirmed?: boolean;
+    createdAt?: Date;
+    products: ProductQuantity[]
+}
+
+export interface DocumentDto {
+    _id?: string;
+    isOut: boolean;
+    office: Office;
+    user: UserDto;
     note?: string;
     isConfirmed?: boolean;
     createdAt?: Date;
