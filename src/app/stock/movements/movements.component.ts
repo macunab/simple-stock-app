@@ -49,6 +49,7 @@ export class MovementsComponent implements OnInit, AfterViewInit {
   dialogDisplay: boolean = false;
   msgCreate: string = '';
   movementDetail!: DocumentDto;
+  skeletonDetail: boolean = true;
 
   constructor(private movementService: MovementsService, 
     private transform: TransformArrayDataService<MovementDto>,
@@ -120,12 +121,17 @@ export class MovementsComponent implements OnInit, AfterViewInit {
   }
 
   openDetailDialog(id: string) {
+    this.dialogDisplay = true;
     this.movementService.findById(id)
-      .subscribe( res => {  
+      .subscribe( res => {
         this.movementDetail = res;
-        console.log(this.movementDetail);
-        this.dialogDisplay = true;
+        console.log(this.skeletonDetail);
+        this.skeletonDetail = false;
       });
+  }
+
+  closeDetail() {
+    this.skeletonDetail = true;
   }
 
   showToastMessage() {

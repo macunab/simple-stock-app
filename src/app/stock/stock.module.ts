@@ -14,6 +14,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CheckboxModule } from 'primeng/checkbox';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
+import { SkeletonModule } from 'primeng/skeleton';
+
 
 import { ConfirmationService } from 'primeng/api';
 
@@ -57,7 +59,8 @@ import { CreateProductComponent } from './products/create-product.component';
     DropdownModule,
     CheckboxModule,
     CardModule,
-    TableModule
+    TableModule,
+    SkeletonModule
   ],
   providers: [
     ConfirmationService

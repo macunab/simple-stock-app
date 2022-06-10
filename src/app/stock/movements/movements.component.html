@@ -3,31 +3,70 @@
     (parentMethod)="getTableEvent($event)" (addMethod)="openAddDialog($event)"></app-table>
 
 <p-dialog header="Detalles del movimiento" [modal]="true" [style]="{width: '750px'}" position="top"  
-    [(visible)]="dialogDisplay" [draggable]="false" [resizable]="false" [dismissableMask]="true">
-    <div>
-        <label class="align-self-center" for="sucursal"> Sucursal:  </label>
-        <h2 id="sucursal" class="align-self-center">{{ movementDetail?.office?.name }}</h2>
+    [(visible)]="dialogDisplay" [draggable]="false" [resizable]="false" [dismissableMask]="true"
+        (onHide)="closeDetail()">
+    <div *ngIf="!skeletonDetail; else skeleton">
+        <div>
+            <label class="align-self-center" for="sucursal"> Sucursal:  </label>
+            <h2 id="sucursal" class="align-self-center">{{ movementDetail?.office?.name }}</h2>
+        </div>
+        <div class="mt-1 flex flex-wrap md:justify-content-between justify-content-center">
+            <h3>Usuario: {{ movementDetail?.user?.name }}</h3>
+            <h3>Fecha: {{movementDetail?.createdAt | date:'short'}}</h3>
+        </div>
+        <div class="mt-1 flex flex-wrap md:justify-content-between justify-content-center">
+            <h3 class="p-4">Tipo:    {{ movementDetail?.isOut ? 'SALIDA' : 'ENTRADA'}}</h3>
+            <h3 class="p-4">Confirmado:    {{ movementDetail?.isConfirmed ? 'Si' : 'No'}}</h3>
+        </div>
+        <div>
+            <table responsiveLayout="stack">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Cantidad</th>
+                    </tr>
+                    <tr *ngFor="let product of movementDetail?.products">
+                        <td>{{ product.product.name }}</td>
+                        <td>{{ product.quantity }}</td>
+                    </tr>
+            </table>
+        </div>
     </div>
-    <div class="mt-1 flex flex-wrap md:justify-content-between justify-content-center">
-        <h3>Usuario: {{ movementDetail?.user?.name }}</h3>
-        <h3>Fecha: {{movementDetail?.createdAt | date:'short'}}</h3>
-    </div>
-    <div class="mt-1 flex flex-wrap md:justify-content-between justify-content-center">
-        <h3 class="p-4">Tipo:    {{ movementDetail?.isOut ? 'SALIDA' : 'ENTRADA'}}</h3>
-        <h3 class="p-4">Confirmado:    {{ movementDetail?.isConfirmed ? 'Si' : 'No'}}</h3>
-    </div>
-    <div>
-        <table responsiveLayout="stack">
-                <tr>
-                    <th>Nombre</th>
-                    <th>Cantidad</th>
-                </tr>
-                <tr *ngFor="let product of movementDetail?.products">
-                    <td>{{ product.product.name }}</td>
-                    <td>{{ product.quantity }}</td>
-                </tr>
-        </table>
-    </div>
+    <ng-template #skeleton>
+        <div>
+            <label class="align-self-center" for="sucursal"> Sucursal:  </label>
+            <h2 id="sucursal" class="align-self-center"><p-skeleton></p-skeleton></h2>
+        </div>
+        <div class="mt-1 flex flex-wrap md:justify-content-between justify-content-center">
+            <div>
+                <label class="align-self-center" for="usuario"> Usuario:  </label>
+                <h3 id="usuario"><p-skeleton></p-skeleton></h3>
+            </div>
+            <div>
+                <label class="align-self-center" for="createdAt"> Fecha de creacion:  </label>
+                <h3 id="createdAt"><p-skeleton></p-skeleton></h3>
+            </div>
+        </div>
+        <div class="mt-1 flex flex-wrap md:justify-content-between justify-content-center">
+            <h3 class="p-4">Tipo:    <p-skeleton></p-skeleton></h3>
+            <h3 class="p-4">Confirmado:    <p-skeleton></p-skeleton></h3>
+        </div>
+        <div>
+            <table responsiveLayout="stack">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Cantidad</th>
+                    </tr>
+                    <tr>
+                        <td><p-skeleton></p-skeleton></td>
+                        <td><p-skeleton></p-skeleton></td>
+                    </tr>
+                    <tr>
+                        <td><p-skeleton></p-skeleton></td>
+                        <td><p-skeleton></p-skeleton></td>
+                    </tr>
+            </table>
+        </div>
+    </ng-template>
 </p-dialog> 
 
 <p-toast></p-toast>
