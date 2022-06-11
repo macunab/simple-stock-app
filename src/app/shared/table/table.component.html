@@ -17,7 +17,7 @@
 <p-table #table [columns]="headers" [value]="rows" responsiveLayout="stack" 
     [globalFilterFields]="filters" [rows]="3" [paginator]="true" 
     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
-    [showCurrentPageReport]="true">
+    [showCurrentPageReport]="true" [loading]="loading">
     <ng-template pTemplate="header" let-columns>
         <tr>
             <th *ngFor="let col of columns">
