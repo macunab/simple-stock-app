@@ -20,8 +20,10 @@ export class TableComponent<T> implements AfterViewChecked{
   constructor(private cd: ChangeDetectorRef) { }
 
   ngAfterViewChecked(): void {
-    if(this.rows !== undefined){
+    if(this.rows !== undefined && this.rows?.length > 0 ){
       this.loading = false;
+    } else {
+      this.loading = true;
     }
     this.cd.detectChanges();
   }

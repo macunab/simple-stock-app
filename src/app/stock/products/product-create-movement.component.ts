@@ -15,7 +15,6 @@ export class ProductCreateMovementComponent {
 
   @Input() product!: Product;
   @Input() office!: Office | undefined;
-
   @Output() formResponse = new EventEmitter<ResForm<MovementSave>>();
 
   movementForm: FormGroup = this.fb.group({
@@ -25,11 +24,13 @@ export class ProductCreateMovementComponent {
     quantity: [1, [Validators.required, Validators.min(1)]]
   });
   movementsType: isOut[] = [{ value: 'Entrada', key: false }, { value: 'Salida', key: true }];
+  loadingButton: boolean = false;
 
   constructor(private fb: FormBuilder, private authService: AuthService,
       private movementService: MovementsService) { }
 
   saveMovement() {
+    this.loadingButton = true;
     if(this.movementForm.invalid) {
       this.movementForm.markAllAsTouched();
       return;
@@ -42,6 +43,7 @@ export class ProductCreateMovementComponent {
       .subscribe( res => {
         if(res.ok){
           this.formResponse.emit({ok: res.ok, data: movement});
+          this.loadingButton = false;
         } 
       });
     this.movementForm.reset();

@@ -59,6 +59,7 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
   selectedOffice: Office = {} as Office;
   changeSelectedOffice: Office | undefined = this.office;
   offices!: Office[];
+  loadingButton: boolean = false;
 
   constructor(private fb: FormBuilder, private productService: ProductsService,
     private confirmationService: ConfirmationService, private msgService: MessageService,
@@ -107,6 +108,7 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
   }
 
   openAddDialog($event: boolean) {
+    this.loadingButton = false;
     this.product._id = '';
     this.productForm.controls['stock'].enable();
     this.productForm.reset();
@@ -136,6 +138,7 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
   }
 
   openEditDialog(product: Product) {
+    this.loadingButton = false;
     this.product = product;
     this.productForm.controls['stock'].disable();
     this.productForm.setValue({
@@ -148,6 +151,7 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
   }
 
   saveProduct() {
+    this.loadingButton = true;
     if(this.productForm.invalid) {
       this.productForm.markAllAsTouched();
       return;
@@ -171,6 +175,7 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
             this.msgService.add({ severity: 'error', summary: 'Error', 
               detail: 'Se ha producido un error al intentar editar el producto', life: 2000 });
           }
+          this.dialogDisplay = false;
         });
     } else {
       this.productService.saveProduct(productToSave)
@@ -185,9 +190,10 @@ export class ProductsComponent implements OnInit, AfterContentChecked {
             this.msgService.add({ severity: 'error', summary: 'ERROR', 
               detail: `Se ha producido un error al intentar guardar el producto ${productToSave.name}`, life: 2000});
           }
+          this.dialogDisplay = false;
         });
     }
-    this.dialogDisplay = false;
+    
   }
 
   openMovementDialog(data: Product) {

@@ -31,6 +31,7 @@
     <ng-template pTemplate="body" let-data let-columns="columns">
         <tr>
             <td *ngFor="let col of columns">
+                <span class="p-column-title">{{ col.title }}:</span>
                 {{col.currency ? (data.values[col.field] | currency) : ( col.date ? (data.values[col.field] | date:'short') : data.values[col.field])}}
             </td>
             <td *ngIf="buttons.length">
