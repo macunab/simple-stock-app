@@ -1,14 +1,18 @@
 
 <div class="navbar">
     <button pButton class="p-button-sm" icon="pi pi-bars" (click)="showSidebar()"></button>
-    <span class="hidden md:inline-block">StockApp</span>
     <p-splitButton styleClass="p-button-outlined p-button-sm" 
         label="Marshall" icon="pi pi-user" [model]="userItems"></p-splitButton>
 </div>
 
 
-<p-sidebar [(visible)]="display" [title]="title">
+<p-sidebar [(visible)]="display" [title]="title" [showCloseIcon]="false">
+    <div class="flex justify-content-center relative top-0 pb-4 mb-4">
+        <span class="text-3xl">Stock</span>
+        <span class="text-3xl font-semibold text-yellow-300">App</span>
+    </div>
+
     <!--<p-dropdown styleClass="mb-3" [style]="{ 'width': '100%'}" [options]="offices" [(ngModel)]="selectedOffice" 
         (onChange)="seleccion($event)" optionLabel="name"></p-dropdown>-->
-    <p-menu [model]="sidebarItems" [style]="{'width':'100%'}"></p-menu>
+    <p-menu class="no-border" [model]="sidebarItems" [style]="{'width':'100%'}"></p-menu>
 </p-sidebar>

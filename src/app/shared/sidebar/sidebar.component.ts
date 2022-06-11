@@ -34,9 +34,6 @@ export class SidebarComponent implements OnInit {
           this.display = false;
         }
       },
-      {
-        separator: true
-      },
       { 
         label: 'Productos',
         icon: 'pi pi-qrcode',
@@ -46,9 +43,6 @@ export class SidebarComponent implements OnInit {
           this.display = false;
         }
       },
-      {
-        separator: true
-      },
       { 
         label: 'Movimientos',
         icon: 'pi pi-book',
@@ -57,9 +51,6 @@ export class SidebarComponent implements OnInit {
           this.router.navigateByUrl('movements');
           this.display = false;
         }
-      },
-      {
-        separator: true
       },
       { 
         label: 'Reportes',

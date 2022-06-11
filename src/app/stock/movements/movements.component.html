@@ -25,7 +25,7 @@
                         <th>Cantidad</th>
                     </tr>
                     <tr *ngFor="let product of movementDetail?.products">
-                        <td>{{ product.product?.name }}</td>
+                        <td>{{ (product.product) ? product.product.name : 'PRODUCTO ELIMINADO' }}</td>
                         <td>{{ product.quantity }}</td>
                     </tr>
             </table>

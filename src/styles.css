@@ -36,3 +36,7 @@ table {
     text-align: left;
     padding: 8px;
   }
+
+  .no-border .p-menu {
+    border: none;
+  }

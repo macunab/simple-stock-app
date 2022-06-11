@@ -143,6 +143,9 @@ export class OfficesComponent implements OnInit {
 
   openEdit(office: Office) {
     this.office = office;
+    if(!office.address){
+      office.address = '';
+    }
     this.officeForm.setValue({
       name: office.name,
       email: office.email,
