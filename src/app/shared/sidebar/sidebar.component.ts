@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { AuthService } from 'src/app/auth/service/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -14,6 +15,7 @@ export class SidebarComponent implements OnInit {
   userItems!: MenuItem[];
   display: boolean = false;
   title: string = 'StockApp';
+  loggedUser: string = '';
   /*selectedOffice: string = '';
   offices: OfficesDrop[] = [
     {name: 'Cerro', code: 'CRR'},
@@ -21,7 +23,7 @@ export class SidebarComponent implements OnInit {
     {name: 'Chacabuco', code: 'CHC'}
   ]*/
 
-  constructor( private router: Router) { }
+  constructor( private router: Router, private authServive: AuthService ) { }
 
   ngOnInit(): void {
     this.sidebarItems = [
@@ -77,6 +79,7 @@ export class SidebarComponent implements OnInit {
         }
       }
     ];
+    this.loggedUser = this.authServive.user.name;
   }
 
   showSidebar() {

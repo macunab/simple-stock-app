@@ -2,7 +2,7 @@
 <div class="navbar">
     <button pButton class="p-button-sm" icon="pi pi-bars" (click)="showSidebar()"></button>
     <p-splitButton styleClass="p-button-outlined p-button-sm" 
-        label="Marshall" icon="pi pi-user" [model]="userItems"></p-splitButton>
+        label="{{loggedUser}}" icon="pi pi-user" [model]="userItems"></p-splitButton>
 </div>
 
 
