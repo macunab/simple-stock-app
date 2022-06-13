@@ -1,14 +1,16 @@
 <h4>Crear movimiento:</h4>
 <p-card styleClass="mx-0 md:mx-6">
+    <div class="p-fluid grid">
+    <div class="field col-12 md:col-9">
+        <label for="office">Sucursal</label>
+        <p-dropdown class="col-12 md:col-6" [options]="offices" [(ngModel)]="selectedOffice"
+            (onChange)="selectOffice($event)" optionLabel="name" name="office" id="office" ></p-dropdown>  
+    </div></div>
     <form autocomplete="off" class="p-2"
         [formGroup]="movementForm"
         (ngSubmit)="saveMovement()">
         <div class="p-fluid grid">
-            <div class="field col-12 md:col-9">
-                <label for="office">Sucursal</label>
-                <p-dropdown class="col-12 md:col-6" [options]="offices" formControlName="office" placeholder="Seleccione una sucursal"
-                    (onChange)="selectOffice($event)" optionLabel="name" name="office" id="office" ></p-dropdown>  
-            </div>
+            
             <div class="field col-8">
                 <p-dropdown #isOut [options]="movementsType" formControlName="isOut"
                     (onChange)="selectMovementType($event)"optionLabel="value" optionValue="key" id="isOut"></p-dropdown>   

@@ -37,6 +37,7 @@ const routes: Routes = [
       { path: '', component: MovementsComponent },
       { path: '/:crt', component: MovementsComponent },
       { path: 'add', component: CreateMovementComponent },
+      { path: 'add/:id', component: CreateMovementComponent },
       { path: '**', redirectTo: '' }
     ]
   },

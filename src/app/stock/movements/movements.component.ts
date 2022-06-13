@@ -87,8 +87,7 @@ export class MovementsComponent implements OnInit, AfterViewInit {
   getTableEvent($event: GenericTableEvent<MovementDto>) {
     switch($event.type) {
       case 'edit':
-        console.log('EDICION DE DATOS');
-        //this.editDialog();
+        this.editMovement($event.data._id!);
         break;
       case 'details':
         this.openDetailDialog($event.data._id!);
@@ -97,6 +96,11 @@ export class MovementsComponent implements OnInit, AfterViewInit {
         this.confirmMovement($event.data._id!);
         break;                
     }
+  }
+
+  editMovement(id: string) {
+    console.log(`Movement Id: ${id}`);
+    this.router.navigate(['movements/add'], { queryParams: { id: id }});
   }
 
   confirmMovement($event: string) {    

@@ -43,6 +43,7 @@ export class OfficesComponent implements OnInit {
     address: ['', [Validators.required]]
   });
   office: Office = { name: '', email: '', address: '', isEnabled: true };
+  loadingButton: boolean = false;
 
   constructor(private officeService: OfficesService, 
     private confirmationService: ConfirmationService,
@@ -63,6 +64,7 @@ export class OfficesComponent implements OnInit {
   }
 
   saveOffice() {
+    this.loadingButton = true;
     if(this.officeForm.invalid) {
       this.officeForm.markAllAsTouched();
       return;
@@ -114,6 +116,7 @@ export class OfficesComponent implements OnInit {
   }
 
   addOpen($event: boolean) {
+    this.loadingButton = false;
     this.officeForm.reset();
     this.office._id = '';
     this.dialogDisplay = $event;
